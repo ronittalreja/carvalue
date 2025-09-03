@@ -1,0 +1,65 @@
+// components/car-price-form.tsx
+import React, { memo } from 'react';
+
+const Stepper = memo(function Stepper({ current, total }: { current: number; total: number }) {
+return (
+  <div className="mb-6 w-full">
+    <div className="flex items-center w-full">
+      {Array.from({ length: total }).map((_, i) => {
+        const isActive = i + 1 === current;
+        const isDone = i + 1 < current;
+        const circleClass =
+          isActive
+            ? "bg-blue-600 text-white border-blue-600"
+            : isDone
+              ? "bg-emerald-500 text-white border-emerald-500"
+              : "bg-gray-100 text-gray-600 border-gray-200";
+        return (
+          <div key={i} className="flex items-center w-full">
+            <div
+              className={`w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center text-[10px] md:text-xs border shrink-0 ${circleClass}`}
+            >
+              {isDone ? "✓" : i + 1}
+            </div>
+            {i < total - 1 && (
+              <div className={`h-0.5 mx-1 md:mx-2 flex-1 rounded ${isDone ? "bg-emerald-500" : "bg-gray-200"}`} />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+);
+});
+
+export default function CarPriceForm() {
+const step = 3; // Example step value
+return (
+  <div>
+    <Stepper current={step} total={8} />
+    {/* Other form components here */}
+  </div>
+);
+}
+
+// app/page.tsx
+import React from 'react';
+import Image from 'next/image';
+import CarPriceForm from '../components/car-price-form';
+
+export default function Home() {
+return (
+  <section className="relative">
+    <div className="mx-auto max-w-6xl px-4 min-h-[calc(100vh-64px)] grid md:grid-cols-2 gap-10 items-center py-6">
+      <div>
+        <h1 className="text-4xl font-bold mb-4">Welcome to Our Car Pricing Tool</h1>
+        <p className="text-lg mb-8">Find the perfect car price with our easy-to-use form.</p>
+        <CarPriceForm />
+      </div>
+      <div>
+        <Image src="/hero-image.jpg" alt="Hero Image" width={500} height={500} className="w-full h-auto" />
+      </div>
+    </div>
+  </section>
+);
+}
