@@ -234,6 +234,21 @@ import pickle
 import os
 from fastapi.middleware.cors import CORSMiddleware
 
+import requests
+
+MODEL_PATH = "backend/CarPriceModel.pkl"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1pq-8U_1sEb1yX5lnnep7xjAwcLunaUzA"
+
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model from Google Drive...")
+    r = requests.get(MODEL_URL, stream=True)
+    r.raise_for_status()
+    with open(MODEL_PATH, "wb") as f:
+        for chunk in r.iter_content(chunk_size=8192):
+            f.write(chunk)
+    print("Model downloaded successfully.")
+
+
 # Create the FastAPI app instance
 app = FastAPI(title="Car Price Dashboard API")
 
