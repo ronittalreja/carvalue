@@ -1,7 +1,5 @@
 __pycache__/
 *.pyc
-*.pkl
-*.csv
+
 node_modules/
 .env
-  
