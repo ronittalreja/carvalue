@@ -59,7 +59,7 @@ export default function ComparePage() {
 
   useEffect(() => {
     ;(async () => {
-      const res = await fetch("https://carvalue.onrender.com/predict")
+      const res = await fetch(`https://carvalue.onrender.com/companies`)
       const data = await res.json()
       setCompanies(data.companies || [])
     })()
@@ -68,7 +68,7 @@ export default function ComparePage() {
   useEffect(() => {
     if (!a.company) return
     ;(async () => {
-      const res = await fetch(`https://carvalue.onrender.com/predict/car-models?company=${encodeURIComponent(a.company)}`)
+      const res = await fetch(`https://carvalue.onrender.com/models/${encodeURIComponent(a.company)}`)
       const data = await res.json()
       setModelsA(data.models || [])
       // Remove auto-selection of first model
@@ -78,7 +78,7 @@ export default function ComparePage() {
   useEffect(() => {
     if (!b.company) return
     ;(async () => {
-      const res = await fetch(`https://carvalue.onrender.com/predict/car-models?company=${encodeURIComponent(b.company)}`)
+      const res = await fetch(`https://carvalue.onrender.com/models/${encodeURIComponent(b.company)}`)
       const data = await res.json()
       setModelsB(data.models || [])
       // Remove auto-selection of first model
@@ -103,7 +103,7 @@ export default function ComparePage() {
       }
 
       const [ra, rb] = await Promise.all([
-        fetch("https://carvalue.onrender.com/predict/predict", {
+        fetch("https://carvalue.onrender.com/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -116,7 +116,7 @@ export default function ComparePage() {
             owners: ownershipMap[a.ownership] || 1,
           }),
         }),
-        fetch("  https://carvalue.onrender.com/predict", {
+        fetch("https://carvalue.onrender.com/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
