@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
 // CSV with columns: name,company,year,Price,kms_driven,fuel_type
-const CSV_URL = new URL('../../backend/cars24.csv', import.meta.url)
+// const CSV_URL = new URL('../../backend/cars24.csv', import.meta.url)
 
 
 export async function GET() {
