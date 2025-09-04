@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     const numericOwners = ownershipMap[owners] || 1
 
     // FastAPI endpoint
-    const endpoint = "https://carvalue.onrender.com/predict/predict"
+    const endpoint = "https://carvalue.onrender.com/predict"
 
     // Call FastAPI
     const res = await fetch(endpoint, {
