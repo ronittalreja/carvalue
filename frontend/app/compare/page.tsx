@@ -59,7 +59,7 @@ export default function ComparePage() {
 
   useEffect(() => {
     ;(async () => {
-      const res = await fetch("https://carvalue.onrender.com/predict/car-data")
+      const res = await fetch("https://carvalue.onrender.com/predict")
       const data = await res.json()
       setCompanies(data.companies || [])
     })()
