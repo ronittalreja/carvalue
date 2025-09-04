@@ -556,7 +556,9 @@ def preprocess_data():
 def load_dataset():
     global df
     try:
-        df = pd.read_csv("cars24.csv", engine="python", on_bad_lines="skip", encoding="utf-8")
+        DATA_PATH = os.path.join(os.path.dirname(__file__), "cars24.csv")
+        df = pd.read_csv(DATA_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
+
 
         # Fix duplicate column names
         if df.columns.duplicated().any():
