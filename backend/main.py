@@ -407,7 +407,7 @@ app = FastAPI(title="Car Price Dashboard API")
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001", "http://127.0.0.1:8080"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001","https://carvalue.vercel.app"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],

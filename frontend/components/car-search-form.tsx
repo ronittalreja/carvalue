@@ -51,7 +51,7 @@ export function CarSearchForm({
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitError, setSubmitError] = useState<string>("")
 
-  const API_BASE = "http://localhost:8000"
+  const API_BASE = "https://carvalue.onrender.com"
 
   // Set initial values if provided (only for edit mode)
   useEffect(() => {

@@ -49,7 +49,7 @@ export default function CarPriceForm() {
     let active = true
     ;(async () => {
       try {
-        const res = await fetch("/api/car-data")
+        const res = await fetch("https://carvalue.onrender.com/car-data")
         const data = await res.json()
         if (!active) return
         setCompanies(data.companies || [])
@@ -71,7 +71,7 @@ export default function CarPriceForm() {
     let active = true
     ;(async () => {
       try {
-        const res = await fetch(`/api/car-models?company=${encodeURIComponent(formData.company)}`)
+        const res = await fetch(`https://carvalue.onrender.com/models/${encodeURIComponent(formData.company)}`)
         const data = await res.json()
         if (!active) return
         setModels(data.models || [])
@@ -114,7 +114,7 @@ export default function CarPriceForm() {
   setPrediction(null)
 
   try {
-    const response = await fetch("/api/predict", {
+    const response = await fetch("https://carvalue.onrender.com/predict", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

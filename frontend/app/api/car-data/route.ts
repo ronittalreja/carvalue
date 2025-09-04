@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 
 // CSV with columns: name,company,year,Price,kms_driven,fuel_type
 const CSV_URL =
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cleaned_Car_data-MJdjoXTAwvFrS1B5RxHX8OGqKUvpIK.csv"
+  "cars24.csv"
 
 export async function GET() {
   try {

@@ -55,9 +55,7 @@ export default function Demand() {
   const fetchAdvancedDemandIndex = async (carData: CarInput): Promise<AdvancedDemandResponse> => {
     // Multiple backend URLs to try
     const baseUrls = [
-      'http://localhost:8000',
-      'http://127.0.0.1:8000',
-      'http://0.0.0.0:8000'
+        'https://carvalue.onrender.com'
     ]
 
     let lastError = null
