@@ -49,7 +49,7 @@ export default function CarPriceForm() {
     let active = true
     ;(async () => {
       try {
-        const res = await fetch("https://carvalue.onrender.com/car-data")
+        const res = await fetch("https://carvalue.onrender.com/companies")
         const data = await res.json()
         if (!active) return
         setCompanies(data.companies || [])

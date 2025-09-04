@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     if (!company) return NextResponse.json({ models: [] })
 
     const base = new URL(request.url)
-    base.pathname = "/api/car-data"
+    base.pathname = "https://carvalue.onrender.com/companies"
     base.search = ""
     const res = await fetch(base.toString(), { cache: "no-store" })
     const data = await res.json()
