@@ -379,6 +379,8 @@ import requests
 import logging
 from typing import Optional
 import re
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from cache_manager import CacheManager
 
 # Set up logging
