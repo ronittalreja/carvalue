@@ -391,6 +391,10 @@ logger = logging.getLogger(__name__)
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "CarPriceModel.pkl")
 MODEL_URL = "https://drive.google.com/uc?export=download&id=1pq-8U_1sEb1yX5lnnep7xjAwcLunaUzA"
 
+# Dataset download configuration (GitHub raw URLs as fallback)
+DATASET_CSV_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/cars24.csv"
+DATASET_PARQUET_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/cars24.parquet"
+
 # Download model if not exists
 if not os.path.exists(MODEL_PATH):
     logger.info("Downloading model from Google Drive...")
@@ -647,8 +651,40 @@ def load_dataset():
             df = pd.read_csv(CSV_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
             logger.info(f"✅ Dataset loaded from CSV with {len(df)} rows and {len(df.columns)} columns")
         else:
-            logger.error("Neither Parquet nor CSV file found!")
-            return False
+            # Fallback: download from GitHub
+            logger.warning("Neither Parquet nor CSV file found locally. Attempting to download from GitHub...")
+            try:
+                # Try Parquet first
+                logger.info(f"Downloading Parquet from {DATASET_PARQUET_URL}")
+                response = requests.get(DATASET_PARQUET_URL, timeout=30)
+                response.raise_for_status()
+                
+                with open(DATA_PATH, 'wb') as f:
+                    f.write(response.content)
+                logger.info(f"✅ Downloaded Parquet file to {DATA_PATH}")
+                
+                df = pd.read_parquet(DATA_PATH, engine="pyarrow")
+                logger.info(f"✅ Dataset loaded from downloaded Parquet with {len(df)} rows and {len(df.columns)} columns")
+                
+            except Exception as download_error:
+                logger.warning(f"Failed to download Parquet: {download_error}")
+                # Try CSV as fallback
+                try:
+                    logger.info(f"Downloading CSV from {DATASET_CSV_URL}")
+                    response = requests.get(DATASET_CSV_URL, timeout=30)
+                    response.raise_for_status()
+                    
+                    with open(CSV_PATH, 'wb') as f:
+                        f.write(response.content)
+                    logger.info(f"✅ Downloaded CSV file to {CSV_PATH}")
+                    
+                    df = pd.read_csv(CSV_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
+                    logger.info(f"✅ Dataset loaded from downloaded CSV with {len(df)} rows and {len(df.columns)} columns")
+                    
+                except Exception as csv_download_error:
+                    logger.error(f"Failed to download CSV: {csv_download_error}")
+                    logger.error("❌ Unable to load dataset from any source")
+                    return False
 
         # Fix duplicate column names
         if df.columns.duplicated().any():
