@@ -738,12 +738,21 @@ def get_companies():
     if companies_cache:
         return {"companies": companies_cache}
     
+    # Try to load from cache file
+    if cache_manager:
+        cached_companies = cache_manager.load_companies()
+        if cached_companies:
+            companies_cache = cached_companies
+            return {"companies": companies_cache}
+    
     # Fallback to dataframe
     if df.empty:
-        raise HTTPException(status_code=500, detail="Dataset not loaded")
+        logger.warning("Dataset not loaded, returning empty companies list")
+        return {"companies": []}
     
     if 'company' not in df.columns:
-        raise HTTPException(status_code=500, detail="Company data not available")
+        logger.warning("Company column not found, returning empty companies list")
+        return {"companies": []}
     
     companies = df['company'].unique().tolist()
     companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c)]
@@ -760,12 +769,21 @@ def get_models(company: str):
     if models_cache and company_norm in models_cache:
         return {"company": company_norm, "models": models_cache[company_norm]}
     
+    # Try to load from cache file
+    if cache_manager:
+        cached_models = cache_manager.load_models()
+        if cached_models and company_norm in cached_models:
+            models_cache = cached_models
+            return {"company": company_norm, "models": models_cache[company_norm]}
+    
     # Fallback to dataframe
     if df.empty:
-        raise HTTPException(status_code=500, detail="Dataset not loaded")
+        logger.warning(f"Dataset not loaded for company {company_norm}, returning empty models list")
+        return {"company": company_norm, "models": []}
     
     if 'company' not in df.columns or 'model' not in df.columns:
-        raise HTTPException(status_code=500, detail="Company/model data not available")
+        logger.warning(f"Company/model columns not found for {company_norm}, returning empty models list")
+        return {"company": company_norm, "models": []}
     
     models = df[df['company'] == company_norm]['model'].unique().tolist()
     models = [m for m in models if m != 'unknown' and m != '' and pd.notna(m)]
@@ -779,26 +797,44 @@ def get_models(company: str):
 
 @app.get("/transmissions")
 def get_transmissions():
+    # Return default options if dataset not loaded
     if df.empty:
-        raise HTTPException(status_code=500, detail="Dataset not loaded")
+        logger.warning("Dataset not loaded, returning default transmission options")
+        return {"transmissions": ["manual", "automatic"]}
     
     if 'transmission' not in df.columns:
+        logger.warning("Transmission column not found, returning default options")
         return {"transmissions": ["manual", "automatic"]}
     
     transmissions = df['transmission'].dropna().unique().tolist()
     transmissions = [normalize_string(t) for t in transmissions if pd.notna(t) and t != '']
+    
+    # If no data found, return defaults
+    if not transmissions:
+        logger.warning("No transmission data found, returning default options")
+        return {"transmissions": ["manual", "automatic"]}
+    
     return {"transmissions": sorted(set(transmissions))}
 
 @app.get("/owners")
 def get_owners():
+    # Return default options if dataset not loaded
     if df.empty:
-        raise HTTPException(status_code=500, detail="Dataset not loaded")
+        logger.warning("Dataset not loaded, returning default owner options")
+        return {"owners": [1, 2, 3, 4]}
     
     if 'owners_numeric' not in df.columns:
+        logger.warning("Owners column not found, returning default options")
         return {"owners": [1, 2, 3, 4]}
     
     owners = df['owners_numeric'].dropna().unique().tolist()
     owners = [int(o) for o in owners if pd.notna(o)]
+    
+    # If no data found, return defaults
+    if not owners:
+        logger.warning("No owner data found, returning default options")
+        return {"owners": [1, 2, 3, 4]}
+    
     return {"owners": sorted(owners)}
 
 @app.get("/demand-index/{company}/{model}")
