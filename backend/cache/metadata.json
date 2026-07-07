@@ -1,0 +1,22 @@
+{
+  "total_rows": 8014,
+  "total_companies": 16,
+  "total_models": 126,
+  "columns": [
+    "index",
+    "Car Name",
+    "year",
+    "kms_driven",
+    "owners",
+    "fuel_type",
+    "Location",
+    "transmission",
+    "Type",
+    "price",
+    "company",
+    "model",
+    "owners_numeric",
+    "owners_str"
+  ],
+  "cache_timestamp": "2026-07-07T20:16:00.362368"
+}

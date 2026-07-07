@@ -379,6 +379,7 @@ import requests
 import logging
 from typing import Optional
 import re
+from cache_manager import CacheManager
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -418,6 +419,11 @@ app.add_middleware(
 # =========================
 model = None
 df = pd.DataFrame()
+cache_manager = CacheManager()
+
+# Cached data for fast access
+companies_cache = None
+models_cache = None
 
 # =========================
 # UTILITY FUNCTIONS
@@ -551,14 +557,85 @@ def preprocess_data():
         logger.info(f"Sample models for first company: {df[df['company'] == df['company'].iloc[0]]['model'].value_counts().head().to_dict()}")
 
 # =========================
+# CACHE BUILDING
+# =========================
+def build_cache():
+    """Build cache for companies and models"""
+    global companies_cache, models_cache
+    
+    if df.empty:
+        logger.warning("Cannot build cache: dataset is empty")
+        return
+    
+    try:
+        # Build companies cache
+        if 'company' in df.columns:
+            companies = df['company'].unique().tolist()
+            companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c)]
+            companies_cache = sorted(companies)
+            cache_manager.save_companies(companies_cache)
+        
+        # Build models cache
+        if 'company' in df.columns and 'model' in df.columns:
+            models_dict = {}
+            for company in companies_cache:
+                models = df[df['company'] == company]['model'].unique().tolist()
+                models = [m for m in models if m != 'unknown' and m != '' and pd.notna(m)]
+                models_dict[company] = sorted(models)
+            models_cache = models_dict
+            cache_manager.save_models(models_cache)
+        
+        # Save metadata
+        metadata = {
+            "total_rows": len(df),
+            "total_companies": len(companies_cache) if companies_cache else 0,
+            "total_models": sum(len(v) for v in models_cache.values()) if models_cache else 0,
+            "columns": df.columns.tolist(),
+            "cache_timestamp": pd.Timestamp.now().isoformat()
+        }
+        cache_manager.save_metadata(metadata)
+        
+        logger.info("✅ Cache built successfully")
+    except Exception as e:
+        logger.error(f"Failed to build cache: {e}")
+
+def load_from_cache():
+    """Load companies and models from cache"""
+    global companies_cache, models_cache
+    
+    try:
+        companies_cache = cache_manager.load_companies()
+        models_cache = cache_manager.load_models()
+        
+        if companies_cache and models_cache:
+            logger.info("✅ Loaded data from cache successfully")
+            return True
+        else:
+            logger.warning("Cache incomplete or missing")
+            return False
+    except Exception as e:
+        logger.error(f"Failed to load from cache: {e}")
+        return False
+
+# =========================
 # LOAD DATASET
 # =========================
 def load_dataset():
     global df
     try:
-        DATA_PATH = os.path.join(os.path.dirname(__file__), "cars24.csv")
-        df = pd.read_csv(DATA_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
-
+        DATA_PATH = os.path.join(os.path.dirname(__file__), "cars24.parquet")
+        
+        # Try to load from Parquet first (faster)
+        if os.path.exists(DATA_PATH):
+            logger.info("Loading from Parquet file...")
+            df = pd.read_parquet(DATA_PATH, engine="pyarrow")
+            logger.info(f"✅ Dataset loaded from Parquet with {len(df)} rows and {len(df.columns)} columns")
+        else:
+            # Fallback to CSV
+            logger.info("Parquet file not found, loading from CSV...")
+            CSV_PATH = os.path.join(os.path.dirname(__file__), "cars24.csv")
+            df = pd.read_csv(CSV_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
+            logger.info(f"✅ Dataset loaded from CSV with {len(df)} rows and {len(df.columns)} columns")
 
         # Fix duplicate column names
         if df.columns.duplicated().any():
@@ -569,7 +646,6 @@ def load_dataset():
         if "Unnamed: 0" in df.columns:
             df.rename(columns={"Unnamed: 0": "index"}, inplace=True)
 
-        logger.info(f"✅ Dataset loaded successfully with {len(df)} rows and {len(df.columns)} columns")
         logger.info(f"Columns after cleaning: {df.columns.tolist()}")
 
         return True
@@ -581,8 +657,12 @@ def load_dataset():
 # Load dataset when server starts
 if load_dataset():
     preprocess_data()
+    # Build and cache companies/models
+    build_cache()
 else:
     logger.warning("Dataset not loaded at startup. Endpoints will return errors until fixed.")
+    # Try to load from cache if dataset fails
+    load_from_cache()
 
 # =========================
 # PYDANTIC MODELS
@@ -637,6 +717,13 @@ def predict_price(car: CarRequest):
 # =========================
 @app.get("/companies")
 def get_companies():
+    global companies_cache
+    
+    # Try cache first
+    if companies_cache:
+        return {"companies": companies_cache}
+    
+    # Fallback to dataframe
     if df.empty:
         raise HTTPException(status_code=500, detail="Dataset not loaded")
     
@@ -645,20 +732,35 @@ def get_companies():
     
     companies = df['company'].unique().tolist()
     companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c)]
-    return {"companies": sorted(companies)}
+    companies_cache = sorted(companies)
+    return {"companies": companies_cache}
 
 @app.get("/models/{company}")
 def get_models(company: str):
+    global models_cache
+    
+    company_norm = normalize_string(company)
+    
+    # Try cache first
+    if models_cache and company_norm in models_cache:
+        return {"company": company_norm, "models": models_cache[company_norm]}
+    
+    # Fallback to dataframe
     if df.empty:
         raise HTTPException(status_code=500, detail="Dataset not loaded")
     
     if 'company' not in df.columns or 'model' not in df.columns:
         raise HTTPException(status_code=500, detail="Company/model data not available")
     
-    company = normalize_string(company)
-    models = df[df['company'] == company]['model'].unique().tolist()
+    models = df[df['company'] == company_norm]['model'].unique().tolist()
     models = [m for m in models if m != 'unknown' and m != '' and pd.notna(m)]
-    return {"company": company, "models": sorted(models)}
+    
+    # Update cache
+    if models_cache is None:
+        models_cache = {}
+    models_cache[company_norm] = sorted(models)
+    
+    return {"company": company_norm, "models": sorted(models)}
 
 @app.get("/transmissions")
 def get_transmissions():
@@ -730,34 +832,90 @@ def demand_index(
                 "transmission": transmission if transmission else "any",
                 "ownership": ownership if ownership else "any",
                 "demand_index": 0.0,
+                "confidence_score": 0.0,
                 "message": "No data found for this combination. Please try different filters.",
                 "metrics": {
                     "matches_count": 0,
-                    "company_total": 0
-                }
+                    "company_total": 0,
+                    "sample_size": 0,
+                    "data_freshness": "unknown"
+                },
+                "breakdown": {},
+                "analysis": {}
             }
 
-        # Calculate demand index
+        # Calculate demand index with improved methodology
         company_cars = df[df['company'] == company_norm]
-        if company_cars.empty:
-            relative_popularity = 0.0
+        
+        # Base popularity score
+        model_counts = company_cars['model'].value_counts()
+        max_count_in_company = model_counts.iloc[0] if not model_counts.empty else 1
+        base_popularity = (len(matches) / max_count_in_company) * 100
+        
+        # Confidence score based on sample size
+        sample_size = len(matches)
+        company_total = len(company_cars)
+        
+        # Higher confidence with larger sample sizes
+        if sample_size >= 100:
+            confidence = 0.95
+        elif sample_size >= 50:
+            confidence = 0.85
+        elif sample_size >= 20:
+            confidence = 0.70
+        elif sample_size >= 10:
+            confidence = 0.50
         else:
-            model_counts = company_cars['model'].value_counts()
-            max_count_in_company = model_counts.iloc[0] if not model_counts.empty else 1
-            relative_popularity = (len(matches) / max_count_in_company) * 100
-            relative_popularity = max(1, min(100, round(relative_popularity, 1)))
+            confidence = 0.30
+        
+        # Adjust demand index based on year (newer cars might have different demand patterns)
+        if 'year' in matches.columns:
+            avg_year = matches['year'].mean()
+            current_year = 2025  # Update this dynamically
+            year_factor = 1.0
+            
+            # Slight boost for cars 3-7 years old (sweet spot for used cars)
+            if 3 <= (current_year - avg_year) <= 7:
+                year_factor = 1.1
+            # Penalty for very old cars (>10 years)
+            elif (current_year - avg_year) > 10:
+                year_factor = 0.9
+            
+            base_popularity *= year_factor
+        
+        # Normalize to 0-100 range
+        demand_index = max(1, min(100, round(base_popularity, 1)))
+        
+        # Build breakdown
+        breakdown = {
+            "sample_size": sample_size,
+            "company_market_share": round((sample_size / company_total) * 100, 2) if company_total > 0 else 0,
+            "base_popularity_score": round(base_popularity / (1.1 if 'year' in matches.columns and 3 <= (2025 - matches['year'].mean()) <= 7 else 1), 2)
+        }
+        
+        # Build analysis
+        analysis = {
+            "demand_level": "High" if demand_index >= 70 else "Medium" if demand_index >= 40 else "Low",
+            "data_reliability": "High" if confidence >= 0.85 else "Medium" if confidence >= 0.50 else "Low",
+            "market_position": f"Top {min(10, round((sample_size / max_count_in_company) * 100))}%" if max_count_in_company > 0 else "Unknown"
+        }
 
         return {
             "company": company,
             "model": model,
             "transmission": transmission if transmission else "any",
             "ownership": ownership if ownership else "any",
-            "demand_index": float(relative_popularity),
-            "message": "Demand index calculated successfully",
+            "demand_index": float(demand_index),
+            "confidence_score": round(confidence, 2),
+            "message": f"Demand index calculated with {round(confidence * 100)}% confidence based on {sample_size} data points",
             "metrics": {
-                "matches_count": int(len(matches)),
-                "company_total": int(len(company_cars))
-            }
+                "matches_count": sample_size,
+                "company_total": company_total,
+                "sample_size": sample_size,
+                "data_freshness": "static_dataset"
+            },
+            "breakdown": breakdown,
+            "analysis": analysis
         }
 
     except Exception as e:
@@ -769,11 +927,16 @@ def demand_index(
             "transmission": transmission if transmission else "any",
             "ownership": ownership if ownership else "any",
             "demand_index": 0.0,
+            "confidence_score": 0.0,
             "message": "Unable to calculate demand index. Please try again.",
             "metrics": {
                 "matches_count": 0,
-                "company_total": 0
-            }
+                "company_total": 0,
+                "sample_size": 0,
+                "data_freshness": "unknown"
+            },
+            "breakdown": {},
+            "analysis": {}
         }
 
 # =========================
