@@ -625,19 +625,30 @@ def load_from_cache():
 def load_dataset():
     global df
     try:
-        DATA_PATH = os.path.join(os.path.dirname(__file__), "cars24.parquet")
+        # Get the directory where this script is located
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        logger.info(f"Script directory: {script_dir}")
+        logger.info(f"Files in directory: {os.listdir(script_dir)}")
+        
+        DATA_PATH = os.path.join(script_dir, "cars24.parquet")
+        CSV_PATH = os.path.join(script_dir, "cars24.csv")
+        
+        logger.info(f"Looking for Parquet at: {DATA_PATH}")
+        logger.info(f"Looking for CSV at: {CSV_PATH}")
         
         # Try to load from Parquet first (faster)
         if os.path.exists(DATA_PATH):
             logger.info("Loading from Parquet file...")
             df = pd.read_parquet(DATA_PATH, engine="pyarrow")
             logger.info(f"✅ Dataset loaded from Parquet with {len(df)} rows and {len(df.columns)} columns")
-        else:
+        elif os.path.exists(CSV_PATH):
             # Fallback to CSV
             logger.info("Parquet file not found, loading from CSV...")
-            CSV_PATH = os.path.join(os.path.dirname(__file__), "cars24.csv")
             df = pd.read_csv(CSV_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
             logger.info(f"✅ Dataset loaded from CSV with {len(df)} rows and {len(df.columns)} columns")
+        else:
+            logger.error("Neither Parquet nor CSV file found!")
+            return False
 
         # Fix duplicate column names
         if df.columns.duplicated().any():
@@ -653,6 +664,8 @@ def load_dataset():
         return True
     except Exception as e:
         logger.error(f"❌ Failed to load dataset: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
         df = pd.DataFrame()
         return False
 
