@@ -1037,7 +1037,8 @@ def health_check():
             "model_loaded": model is not None,
             "dataset_loaded": False,
             "dataset_rows": 0,
-            "dataset_columns": []
+            "dataset_columns": [],
+            "cache_exists": cache_manager is not None
         }
     
     return {
@@ -1045,7 +1046,8 @@ def health_check():
         "model_loaded": model is not None,
         "dataset_loaded": not df.empty,
         "dataset_rows": len(df) if not df.empty else 0,
-        "dataset_columns": list(df.columns) if not df.empty else []
+        "dataset_columns": list(df.columns) if not df.empty else [],
+        "cache_exists": cache_manager is not None
     }
 
 # =========================
@@ -1054,33 +1056,22 @@ def health_check():
 @app.get("/debug")
 def debug_info():
     """Debug endpoint to check data structure"""
-    if df.empty:
-        return {"error": "Dataset not loaded"}
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    parquet_path = os.path.join(script_dir, "cars24.parquet")
+    csv_path = os.path.join(script_dir, "cars24.csv")
     
-    debug_data = {
-        "shape": df.shape,
-        "columns": df.columns.tolist(),
-        "dtypes": df.dtypes.astype(str).to_dict(),
-        "sample_data": df.head(3).to_dict(),
-        "null_counts": df.isnull().sum().to_dict()
+    return {
+        "dataset_loaded": not df.empty,
+        "dataset_rows": len(df) if not df.empty else 0,
+        "script_directory": script_dir,
+        "files_in_directory": os.listdir(script_dir),
+        "parquet_exists": os.path.exists(parquet_path),
+        "csv_exists": os.path.exists(csv_path),
+        "parquet_path": parquet_path,
+        "csv_path": csv_path,
+        "cache_manager_exists": cache_manager is not None,
+        "model_loaded": model is not None
     }
-    
-    # Add specific car data samples
-    if 'company' in df.columns:
-        debug_data["companies_sample"] = df['company'].value_counts().head().to_dict()
-    
-    if 'model' in df.columns and 'company' in df.columns:
-        # Show models for BMW as example
-        bmw_models = df[df['company'] == 'bmw']['model'].value_counts().head()
-        debug_data["bmw_models_sample"] = bmw_models.to_dict()
-    
-    if 'owners_numeric' in df.columns:
-        debug_data["owners_distribution"] = df['owners_numeric'].value_counts().sort_index().to_dict()
-    
-    if 'transmission' in df.columns:
-        debug_data["transmission_types"] = df['transmission'].value_counts().to_dict()
-    
-    return debug_data
 
 # =========================
 # HOME ENDPOINT  
