@@ -643,8 +643,18 @@ def load_dataset():
         # Try to load from Parquet first (faster)
         if os.path.exists(DATA_PATH):
             logger.info("Loading from Parquet file...")
-            df = pd.read_parquet(DATA_PATH, engine="pyarrow")
-            logger.info(f"✅ Dataset loaded from Parquet with {len(df)} rows and {len(df.columns)} columns")
+            try:
+                df = pd.read_parquet(DATA_PATH, engine="pyarrow")
+                logger.info(f"✅ Dataset loaded from Parquet with {len(df)} rows and {len(df.columns)} columns")
+            except ImportError as e:
+                logger.warning(f"Pyarrow not installed, falling back to CSV: {e}")
+                if os.path.exists(CSV_PATH):
+                    logger.info("Loading from CSV file...")
+                    df = pd.read_csv(CSV_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
+                    logger.info(f"✅ Dataset loaded from CSV with {len(df)} rows and {len(df.columns)} columns")
+                else:
+                    logger.error("CSV file not found for fallback")
+                    return False
         elif os.path.exists(CSV_PATH):
             # Fallback to CSV
             logger.info("Parquet file not found, loading from CSV...")
