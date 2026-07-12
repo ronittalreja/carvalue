@@ -397,16 +397,17 @@ DATASET_PARQUET_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/m
 
 # Download model if not exists
 if not os.path.exists(MODEL_PATH):
-    logger.info("Downloading model from Google Drive...")
+    logger.info("Model file not found locally. Downloading from Google Drive...")
     try:
-        r = requests.get(MODEL_URL, stream=True)
+        r = requests.get(MODEL_URL, stream=True, timeout=60)
         r.raise_for_status()
         with open(MODEL_PATH, "wb") as f:
             for chunk in r.iter_content(chunk_size=8192):
                 f.write(chunk)
-        logger.info("Model downloaded successfully.")
+        logger.info("✅ Model downloaded successfully.")
     except Exception as e:
-        logger.error(f"Failed to download model: {e}")
+        logger.error(f"❌ Failed to download model: {e}")
+        logger.error("Prediction endpoint will not work without the model.")
 
 # Create the FastAPI app instance
 app = FastAPI(title="Car Price Dashboard API")
