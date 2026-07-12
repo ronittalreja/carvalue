@@ -1060,6 +1060,21 @@ def debug_info():
     parquet_path = os.path.join(script_dir, "cars24.parquet")
     csv_path = os.path.join(script_dir, "cars24.csv")
     
+    # Try to manually load dataset and return error if fails
+    load_error = None
+    if df.empty:
+        try:
+            if os.path.exists(parquet_path):
+                test_df = pd.read_parquet(parquet_path, engine="pyarrow")
+                load_error = f"Parquet file exists and has {len(test_df)} rows but df is empty"
+            elif os.path.exists(csv_path):
+                test_df = pd.read_csv(csv_path, engine="python", on_bad_lines="skip", encoding="utf-8")
+                load_error = f"CSV file exists and has {len(test_df)} rows but df is empty"
+            else:
+                load_error = "Neither parquet nor csv file exists"
+        except Exception as e:
+            load_error = f"Error loading dataset manually: {str(e)}"
+    
     return {
         "dataset_loaded": not df.empty,
         "dataset_rows": len(df) if not df.empty else 0,
@@ -1070,7 +1085,8 @@ def debug_info():
         "parquet_path": parquet_path,
         "csv_path": csv_path,
         "cache_manager_exists": cache_manager is not None,
-        "model_loaded": model is not None
+        "model_loaded": model is not None,
+        "load_error": load_error
     }
 
 # =========================
