@@ -888,7 +888,9 @@ def demand_index(
     company: str, 
     model: str, 
     transmission: Optional[str] = Query(None),
-    ownership: Optional[str] = Query(None)
+    ownership: Optional[str] = Query(None),
+    year: Optional[int] = Query(None),
+    fuel_type: Optional[str] = Query(None)
 ):
     if df.empty:
         raise HTTPException(status_code=500, detail="Dataset not loaded")
@@ -921,25 +923,58 @@ def demand_index(
                 ownership_norm = normalize_string(ownership)
                 matches = matches[matches['owners_str'] == ownership_norm]
 
+        # Apply year filter if provided (with range tolerance)
+        if year and 'year' in df.columns:
+            year_range = 2  # Allow ±2 years
+            matches = matches[(df['year'] >= year - year_range) & (df['year'] <= year + year_range)]
+
+        # Apply fuel type filter if provided
+        if fuel_type and 'fuel_type' in df.columns:
+            fuel_norm = normalize_string(fuel_type)
+            matches = matches[matches['fuel_type'] == fuel_norm]
+
+        # If no exact matches, try fuzzy matching for model name
         if matches.empty:
-            # Return a user-friendly response instead of error
-            return {
-                "company": company,
-                "model": model,
-                "transmission": transmission if transmission else "any",
-                "ownership": ownership if ownership else "any",
-                "demand_index": 0.0,
-                "confidence_score": 0.0,
-                "message": "No data found for this combination. Please try different filters.",
-                "metrics": {
-                    "matches_count": 0,
-                    "company_total": 0,
-                    "sample_size": 0,
-                    "data_freshness": "unknown"
-                },
-                "breakdown": {},
-                "analysis": {}
-            }
+            # Try to find similar models in the same company
+            company_cars = df[df['company'] == company_norm]
+            if not company_cars.empty:
+                # Check if any model contains the search term
+                similar_models = company_cars[company_cars['model'].str.contains(model_norm.split()[0], na=False)]
+                if not similar_models.empty:
+                    matches = similar_models
+                    logger.info(f"Using fuzzy match for model: {model_norm} -> {similar_models['model'].iloc[0]}")
+
+        # If still no matches, use company-level data as fallback
+        if matches.empty:
+            company_cars = df[df['company'] == company_norm]
+            if not company_cars.empty:
+                matches = company_cars
+                logger.info(f"Using company-level data for: {company_norm}")
+                return {
+                    "company": company,
+                    "model": model,
+                    "transmission": transmission if transmission else "any",
+                    "ownership": ownership if ownership else "any",
+                    "demand_index": 50.0,  # Neutral score for company-level estimate
+                    "confidence_score": 30.0,  # Low confidence due to lack of specific data
+                    "message": f"No specific data for {model}. Using company-level demand estimate for {company}.",
+                    "metrics": {
+                        "matches_count": len(company_cars),
+                        "company_total": len(company_cars),
+                        "sample_size": len(company_cars),
+                        "data_freshness": "company_level"
+                    },
+                    "breakdown": {
+                        "base_popularity": 50.0,
+                        "transmission_adjustment": 0.0,
+                        "ownership_adjustment": 0.0,
+                        "year_adjustment": 0.0
+                    },
+                    "analysis": {
+                        "insight": f"Based on overall demand for {company} vehicles",
+                        "recommendation": "Consider adding more specific car data for accurate predictions"
+                    }
+                }
 
         # Calculate demand index with improved methodology
         company_cars = df[df['company'] == company_norm]
