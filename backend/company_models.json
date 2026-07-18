@@ -1,0 +1,160 @@
+{
+  "bmw": [
+    "3 series"
+  ],
+  "datsun": [
+    "go",
+    "go plus",
+    "redi go"
+  ],
+  "ford": [
+    "ecosport",
+    "endeavour",
+    "figo aspire",
+    "freestyle",
+    "new figo"
+  ],
+  "honda": [
+    "accord",
+    "amaze",
+    "br-v",
+    "brio",
+    "city",
+    "civic",
+    "crv",
+    "jazz",
+    "wr-v"
+  ],
+  "hyundai": [
+    "alcazar",
+    "aura",
+    "creta",
+    "elite i20",
+    "eon",
+    "grand i10",
+    "grand i10 nios",
+    "i10",
+    "i20",
+    "i20 active",
+    "new elantra",
+    "new i20",
+    "new i20 n line",
+    "new santro",
+    "santro xing",
+    "sonata",
+    "tucson new",
+    "venue",
+    "verna",
+    "xcent"
+  ],
+  "jeep": [
+    "compass",
+    "grand cherokee"
+  ],
+  "kia": [
+    "carens",
+    "seltos",
+    "sonet"
+  ],
+  "mahindra": [
+    "bolero",
+    "bolero neo",
+    "kuv 100 nxt",
+    "kuv100",
+    "marazzo",
+    "scorpio",
+    "thar",
+    "tuv 300 plus",
+    "tuv300",
+    "xuv 3oo",
+    "xuv500",
+    "xuv700"
+  ],
+  "maruti": [
+    "a star",
+    "alto",
+    "alto 800",
+    "alto k10",
+    "baleno",
+    "brezza",
+    "celerio",
+    "celerio x",
+    "ciaz",
+    "dzire",
+    "eeco",
+    "ertiga",
+    "ignis",
+    "new wagon-r",
+    "omni e",
+    "ritz",
+    "s cross",
+    "s presso",
+    "swift",
+    "swift dzire",
+    "vitara brezza",
+    "wagon r",
+    "wagon r 1.0",
+    "wagon r stingray",
+    "xl6",
+    "zen estilo"
+  ],
+  "mg": [
+    "hector",
+    "hector plus"
+  ],
+  "nissan": [
+    "magnite",
+    "micra",
+    "micra active",
+    "sunny",
+    "terrano"
+  ],
+  "renault": [
+    "captur",
+    "duster",
+    "kiger",
+    "kwid",
+    "pulse",
+    "triber"
+  ],
+  "skoda": [
+    "kushaq",
+    "octavia",
+    "rapid",
+    "slavia"
+  ],
+  "tata": [
+    "altroz",
+    "bolt",
+    "harrier",
+    "hexa",
+    "nexon",
+    "punch",
+    "safari",
+    "tiago",
+    "tiago nrg",
+    "tigor",
+    "zest"
+  ],
+  "toyota": [
+    "camry",
+    "corolla altis",
+    "etios",
+    "etios liva",
+    "fortuner",
+    "glanza",
+    "innova",
+    "innova crysta",
+    "urban cruiser",
+    "yaris"
+  ],
+  "volkswagen": [
+    "ameo",
+    "jetta",
+    "polo",
+    "t-roc",
+    "taigun",
+    "tiguan",
+    "vento"
+  ]
+}

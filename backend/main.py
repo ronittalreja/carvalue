@@ -391,6 +391,10 @@ logger = logging.getLogger(__name__)
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "CarPriceModel.pkl")
 MODEL_URL = "https://drive.google.com/uc?export=download&id=1pq-8U_1sEb1yX5lnnep7xjAwcLunaUzA"
 
+# JSON data files for companies and models
+COMPANIES_JSON_PATH = os.path.join(os.path.dirname(__file__), "companies.json")
+MODELS_JSON_PATH = os.path.join(os.path.dirname(__file__), "company_models.json")
+
 # Dataset download configuration (GitHub raw URLs as fallback)
 DATASET_CSV_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/cars24.csv"
 DATASET_PARQUET_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/cars24.parquet"
@@ -427,6 +431,26 @@ app.add_middleware(
 model = None
 df = pd.DataFrame()
 cache_manager = CacheManager()
+
+# Load companies and models from JSON files
+companies_data = None
+company_models_data = None
+
+try:
+    with open(COMPANIES_JSON_PATH, 'r') as f:
+        companies_data = json.load(f)
+    logger.info(f"✅ Loaded {len(companies_data)} companies from JSON")
+except Exception as e:
+    logger.warning(f"⚠️ Failed to load companies from JSON: {e}")
+    companies_data = []
+
+try:
+    with open(MODELS_JSON_PATH, 'r') as f:
+        company_models_data = json.load(f)
+    logger.info(f"✅ Loaded company models from JSON")
+except Exception as e:
+    logger.warning(f"⚠️ Failed to load company models from JSON: {e}")
+    company_models_data = {}
 
 # Cached data for fast access
 companies_cache = None
@@ -780,27 +804,31 @@ def predict_price(car: CarRequest):
 @app.get("/companies")
 def get_companies():
     global companies_cache
-    
+
+    # Use JSON data first
+    if companies_data:
+        return {"companies": companies_data}
+
     # Try cache first
     if companies_cache:
         return {"companies": companies_cache}
-    
+
     # Try to load from cache file
     if cache_manager:
         cached_companies = cache_manager.load_companies()
         if cached_companies:
             companies_cache = cached_companies
             return {"companies": companies_cache}
-    
+
     # Fallback to dataframe
     if df.empty:
         logger.warning("Dataset not loaded, returning empty companies list")
         return {"companies": []}
-    
+
     if 'company' not in df.columns:
         logger.warning("Company column not found, returning empty companies list")
         return {"companies": []}
-    
+
     companies = df['company'].unique().tolist()
     companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c)]
     companies_cache = sorted(companies)
@@ -809,8 +837,12 @@ def get_companies():
 @app.get("/models/{company}")
 def get_models(company: str):
     global models_cache
-    
+
     company_norm = normalize_string(company)
+
+    # Use JSON data first
+    if company_models_data and company_norm in company_models_data:
+        return {"company": company_norm, "models": company_models_data[company_norm]}
     
     # Try cache first
     if models_cache and company_norm in models_cache:
