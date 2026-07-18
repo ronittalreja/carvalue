@@ -1,0 +1,12 @@
+{
+  "original_rows": 29400,
+  "cleaned_rows": 18926,
+  "removed_rows": 10474,
+  "companies": 30,
+  "price_range": [
+    50000.0,
+    10000000.0
+  ],
+  "avg_price": 1405951.2868117932,
+  "median_price": 537000.0
+}
