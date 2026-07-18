@@ -395,6 +395,7 @@ MODEL_GITHUB_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main
 # JSON data files for companies and models
 COMPANIES_JSON_PATH = os.path.join(os.path.dirname(__file__), "companies.json")
 MODELS_JSON_PATH = os.path.join(os.path.dirname(__file__), "company_models.json")
+DEMAND_DATA_JSON_PATH = os.path.join(os.path.dirname(__file__), "demand_data.json")
 
 # Dataset download configuration (GitHub raw URLs as fallback)
 DATASET_CSV_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/cars24.csv"
@@ -454,6 +455,16 @@ try:
 except Exception as e:
     logger.warning(f"⚠️ Failed to load company models from JSON: {e}")
     company_models_data = {}
+
+# Load demand data from JSON file
+demand_data = None
+try:
+    with open(DEMAND_DATA_JSON_PATH, 'r') as f:
+        demand_data = json.load(f)
+    logger.info(f"✅ Loaded {len(demand_data)} records from demand data JSON")
+except Exception as e:
+    logger.warning(f"⚠️ Failed to load demand data from JSON: {e}")
+    demand_data = []
 
 # Cached data for fast access
 companies_cache = None
@@ -950,62 +961,58 @@ def demand_index(
     year: Optional[int] = Query(None),
     fuel_type: Optional[str] = Query(None)
 ):
-    if df.empty:
-        raise HTTPException(status_code=500, detail="Dataset not loaded")
-
-    if 'company' not in df.columns or 'model' not in df.columns:
-        raise HTTPException(status_code=500, detail="Company/model data not available")
+    if not demand_data:
+        raise HTTPException(status_code=500, detail="Demand data not loaded")
 
     company_norm = normalize_string(company)
     model_norm = normalize_string(model)
 
     try:
-        # Start with company and model filter
-        matches = df[
-            (df['company'] == company_norm) &
-            (df['model'] == model_norm)
+        # Start with company and model filter using JSON data
+        matches = [
+            car for car in demand_data 
+            if car['company'] == company_norm and car['car_model'] == model_norm
         ]
 
         # Apply transmission filter if provided
-        if transmission and 'transmission' in df.columns:
+        if transmission:
             transmission_norm = normalize_string(transmission)
-            matches = matches[matches['transmission'] == transmission_norm]
+            matches = [car for car in matches if car.get('transmission') == transmission_norm]
 
         # Apply ownership filter if provided  
-        if ownership and 'owners_numeric' in df.columns:
+        if ownership:
             try:
                 ownership_num = int(ownership)
-                matches = matches[matches['owners_numeric'] == ownership_num]
+                matches = [car for car in matches if car.get('owners') == ownership_num]
             except (ValueError, TypeError):
-                # If can't convert to int, try string matching
-                ownership_norm = normalize_string(ownership)
-                matches = matches[matches['owners_str'] == ownership_norm]
+                pass
 
         # Apply year filter if provided (with range tolerance)
-        if year and 'year' in df.columns:
+        if year:
             year_range = 2  # Allow ±2 years
-            matches = matches[(df['year'] >= year - year_range) & (df['year'] <= year + year_range)]
+            matches = [car for car in matches if abs(car.get('year', 0) - year) <= year_range]
 
         # Apply fuel type filter if provided
-        if fuel_type and 'fuel_type' in df.columns:
+        if fuel_type:
             fuel_norm = normalize_string(fuel_type)
-            matches = matches[matches['fuel_type'] == fuel_norm]
+            matches = [car for car in matches if car.get('fuel_type') == fuel_norm]
 
         # If no exact matches, try fuzzy matching for model name
-        if matches.empty:
+        if not matches:
             # Try to find similar models in the same company
-            company_cars = df[df['company'] == company_norm]
-            if not company_cars.empty:
+            company_cars = [car for car in demand_data if car['company'] == company_norm]
+            if company_cars:
                 # Check if any model contains the search term
-                similar_models = company_cars[company_cars['model'].str.contains(model_norm.split()[0], na=False)]
-                if not similar_models.empty:
+                model_search = model_norm.split()[0] if model_norm.split() else model_norm
+                similar_models = [car for car in company_cars if model_search in car.get('car_model', '')]
+                if similar_models:
                     matches = similar_models
-                    logger.info(f"Using fuzzy match for model: {model_norm} -> {similar_models['model'].iloc[0]}")
+                    logger.info(f"Using fuzzy match for model: {model_norm} -> {similar_models[0]['car_model']}")
 
         # If still no matches, use company-level data as fallback
-        if matches.empty:
-            company_cars = df[df['company'] == company_norm]
-            if not company_cars.empty:
+        if not matches:
+            company_cars = [car for car in demand_data if car['company'] == company_norm]
+            if company_cars:
                 matches = company_cars
                 logger.info(f"Using company-level data for: {company_norm}")
                 return {
@@ -1035,11 +1042,14 @@ def demand_index(
                 }
 
         # Calculate demand index with improved methodology
-        company_cars = df[df['company'] == company_norm]
+        company_cars = [car for car in demand_data if car['company'] == company_norm]
         
         # Base popularity score
-        model_counts = company_cars['model'].value_counts()
-        max_count_in_company = model_counts.iloc[0] if not model_counts.empty else 1
+        model_counts = {}
+        for car in company_cars:
+            model_name = car.get('car_model', '')
+            model_counts[model_name] = model_counts.get(model_name, 0) + 1
+        max_count_in_company = max(model_counts.values()) if model_counts else 1
         base_popularity = (len(matches) / max_count_in_company) * 100
         
         # Confidence score based on sample size
@@ -1059,19 +1069,21 @@ def demand_index(
             confidence = 0.30
         
         # Adjust demand index based on year (newer cars might have different demand patterns)
-        if 'year' in matches.columns:
-            avg_year = matches['year'].mean()
-            current_year = 2025  # Update this dynamically
-            year_factor = 1.0
-            
-            # Slight boost for cars 3-7 years old (sweet spot for used cars)
-            if 3 <= (current_year - avg_year) <= 7:
-                year_factor = 1.1
-            # Penalty for very old cars (>10 years)
-            elif (current_year - avg_year) > 10:
-                year_factor = 0.9
-            
-            base_popularity *= year_factor
+        if matches:
+            years = [car.get('year', 0) for car in matches if car.get('year')]
+            if years:
+                avg_year = sum(years) / len(years)
+                current_year = 2025  # Update this dynamically
+                year_factor = 1.0
+                
+                # Slight boost for cars 3-7 years old (sweet spot for used cars)
+                if 3 <= (current_year - avg_year) <= 7:
+                    year_factor = 1.1
+                # Penalty for very old cars (>10 years)
+                elif (current_year - avg_year) > 10:
+                    year_factor = 0.9
+                
+                base_popularity *= year_factor
         
         # Normalize to 0-100 range
         demand_index = max(1, min(100, round(base_popularity, 1)))
@@ -1080,7 +1092,7 @@ def demand_index(
         breakdown = {
             "sample_size": sample_size,
             "company_market_share": round((sample_size / company_total) * 100, 2) if company_total > 0 else 0,
-            "base_popularity_score": round(base_popularity / (1.1 if 'year' in matches.columns and 3 <= (2025 - matches['year'].mean()) <= 7 else 1), 2)
+            "base_popularity_score": round(base_popularity, 2)
         }
         
         # Build analysis
