@@ -389,7 +389,7 @@ logger = logging.getLogger(__name__)
 
 # Model download configuration
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "CarPriceModel.pkl")
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1pq-8U_1sEb1yX5lnnep7xjAwcLunaUzA"
+MODEL_GITHUB_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/CarPriceModel.pkl"
 
 # JSON data files for companies and models
 COMPANIES_JSON_PATH = os.path.join(os.path.dirname(__file__), "companies.json")
@@ -399,18 +399,18 @@ MODELS_JSON_PATH = os.path.join(os.path.dirname(__file__), "company_models.json"
 DATASET_CSV_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/cars24.csv"
 DATASET_PARQUET_URL = "https://raw.githubusercontent.com/ronittalreja/carvalue/main/backend/cars24.parquet"
 
-# Download model if not exists
+# Download model if not exists from GitHub
 if not os.path.exists(MODEL_PATH):
-    logger.info("Model file not found locally. Downloading from Google Drive...")
+    logger.info("Model file not found locally. Downloading from GitHub...")
     try:
-        r = requests.get(MODEL_URL, stream=True, timeout=60)
+        r = requests.get(MODEL_GITHUB_URL, stream=True, timeout=60)
         r.raise_for_status()
         with open(MODEL_PATH, "wb") as f:
             for chunk in r.iter_content(chunk_size=8192):
                 f.write(chunk)
-        logger.info("✅ Model downloaded successfully.")
+        logger.info("✅ Model downloaded successfully from GitHub.")
     except Exception as e:
-        logger.error(f"❌ Failed to download model: {e}")
+        logger.error(f"❌ Failed to download model from GitHub: {e}")
         logger.error("Prediction endpoint will not work without the model.")
 
 # Create the FastAPI app instance
