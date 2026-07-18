@@ -97,7 +97,8 @@ for col in ['company', 'car_model']:
 
 # Extract unique companies
 companies = combined_df['company'].unique().tolist()
-companies = [c for c in companies if c != 'unknown' and c != '' and c != 'nan']
+# Filter out invalid entries: unknown, empty, nan, and years (numeric values)
+companies = [c for c in companies if c != 'unknown' and c != '' and c != 'nan' and not c.replace('.', '').isdigit()]
 companies = sorted(companies)
 
 # Build models dictionary
