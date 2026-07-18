@@ -95,6 +95,17 @@ print(f"Combined dataset: {len(combined_df)} rows")
 for col in ['company', 'car_model']:
     combined_df[col] = combined_df[col].astype(str).str.lower().str.strip()
 
+# Normalize company names (merge similar names)
+def normalize_company_name(company):
+    company = str(company).lower().strip()
+    # Merge maruti suzuki into maruti
+    if company == 'maruti suzuki':
+        return 'maruti'
+    # Add other normalizations if needed
+    return company
+
+combined_df['company'] = combined_df['company'].apply(normalize_company_name)
+
 # Extract unique companies
 companies = combined_df['company'].unique().tolist()
 # Filter out invalid entries: unknown, empty, nan, and years (numeric values)
