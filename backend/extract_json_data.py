@@ -2,57 +2,110 @@ import pandas as pd
 import json
 import os
 
-# Load the dataset
+# Load the combined dataset from training script
 script_dir = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(script_dir, "cars24.parquet")
-CSV_PATH = os.path.join(script_dir, "cars24.csv")
+data_dir = os.path.join(script_dir, "neww data")
 
-# Try to load from Parquet first
-if os.path.exists(DATA_PATH):
-    print(f"Loading from Parquet: {DATA_PATH}")
-    df = pd.read_parquet(DATA_PATH, engine="pyarrow")
-elif os.path.exists(CSV_PATH):
-    print(f"Loading from CSV: {CSV_PATH}")
-    df = pd.read_csv(CSV_PATH, engine="python", on_bad_lines="skip", encoding="utf-8")
-else:
-    print("No dataset found!")
-    exit(1)
+# Load all three datasets and combine them
+print("Loading combined datasets...")
 
-print(f"Dataset loaded with {len(df)} rows")
-print(f"Columns: {df.columns.tolist()}")
+# Load realistic_car_data.csv
+df1 = pd.read_csv(os.path.join(data_dir, "realistic_car_data.csv"))
+df1 = df1.rename(columns={
+    'Brand': 'company',
+    'Model': 'car_model',
+    'Year': 'year',
+    'Odometer Reading (km)': 'kms_driven',
+    'Fuel Type': 'fuel_type',
+    'Transmission Type': 'transmission',
+    'Color': 'color',
+    'Number of Owners': 'owners',
+    'Service History': 'service_history',
+    'Location': 'location',
+    'Previous Accidents': 'previous_accidents',
+    'Engine Capacity (L)': 'engine_capacity',
+    'Car Type': 'car_type',
+    'Insurance Type': 'insurance',
+    'Price (INR)': 'price'
+})
 
-# Check if company and model columns exist
-if 'company' in df.columns and 'model' in df.columns:
-    # Dataset already has company and model columns
-    companies = df['company'].unique().tolist()
-    companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c)]
-    companies = sorted([str(c).lower().strip() for c in companies])
-    
-    # Build models dictionary
-    models_dict = {}
-    for company in companies:
-        company_models = df[df['company'].str.lower() == company]['model'].unique().tolist()
-        company_models = [m for m in company_models if m != 'unknown' and m != '' and pd.notna(m)]
-        models_dict[company] = sorted([str(m).lower().strip() for m in company_models])
-    
-elif 'Car Name' in df.columns:
-    # Need to extract company and model from Car Name
-    df['company'] = df['Car Name'].apply(lambda x: str(x).split()[0].lower().strip() if isinstance(x, str) and len(x.split()) > 0 else "unknown")
-    df['model'] = df['Car Name'].apply(lambda x: ' '.join(str(x).split()[1:]).lower().strip() if isinstance(x, str) and len(x.split()) > 1 else "unknown")
-    
-    companies = df['company'].unique().tolist()
-    companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c)]
-    companies = sorted(companies)
-    
-    # Build models dictionary
-    models_dict = {}
-    for company in companies:
-        company_models = df[df['company'] == company]['model'].unique().tolist()
-        company_models = [m for m in company_models if m != 'unknown' and m != '' and pd.notna(m)]
-        models_dict[company] = sorted(company_models)
-else:
-    print("No company/model columns found!")
-    exit(1)
+# Load Cars24.csv
+df2 = pd.read_csv(os.path.join(data_dir, "Cars24.csv"))
+df2 = df2.rename(columns={
+    'Year': 'year',
+    'Car Model': 'car_model',
+    'Car Variant': 'car_variant',
+    'KM Driven': 'kms_driven',
+    'Fuel Type': 'fuel_type',
+    'Transmission Type': 'transmission',
+    'Ownership': 'ownership',
+    'Price(in Lakhs)': 'price_lakhs',
+    'Location': 'location'
+})
+df2['company'] = df2['car_model'].apply(lambda x: str(x).split()[0].lower().strip() if isinstance(x, str) and len(x.split()) > 0 else "unknown")
+df2['car_model'] = df2['car_model'].apply(lambda x: ' '.join(str(x).split()[1:]).lower().strip() if isinstance(x, str) and len(x.split()) > 1 else "unknown")
+df2['color'] = 'unknown'
+df2['service_history'] = False
+df2['previous_accidents'] = False
+df2['engine_capacity'] = 0
+df2['car_type'] = 'unknown'
+df2['insurance'] = 'unknown'
+
+# Load car_details.csv
+df3 = pd.read_csv(os.path.join(data_dir, "car_details.csv"))
+df3 = df3.rename(columns={
+    'vehical_name': 'car_name',
+    'Registration Year ': 'year',
+    'Insurance ': 'insurance',
+    'Fuel Type ': 'fuel_type',
+    'Seats ': 'seats',
+    'Kms Driven ': 'kms_driven',
+    'RTO': 'location',
+    'Ownership ': 'ownership',
+    'Engine Displacement ': 'engine_capacity',
+    'Transmission ': 'transmission',
+    'Year of Manufacture ': 'manufacture_year',
+    'Engine ': 'engine',
+    'Power ': 'power',
+    'Drive Type ': 'drive_type',
+    'Mileage ': 'mileage',
+    'Fuel ': 'fuel',
+    'new_vehical_price': 'new_price',
+    'vehical_price': 'price',
+    'other_features': 'other_features'
+})
+df3['company'] = df3['car_name'].apply(lambda x: str(x).split()[0].lower().strip() if isinstance(x, str) and len(x.split()) > 0 else "unknown")
+df3['car_model'] = df3['car_name'].apply(lambda x: ' '.join(str(x).split()[1:]).lower().strip() if isinstance(x, str) and len(x.split()) > 1 else "unknown")
+df3['color'] = 'unknown'
+df3['service_history'] = False
+df3['previous_accidents'] = False
+df3['car_type'] = 'unknown'
+
+# Select common columns
+common_columns = ['company', 'car_model']
+df1_selected = df1[common_columns].copy()
+df2_selected = df2[common_columns].copy()
+df3_selected = df3[common_columns].copy()
+
+# Combine datasets
+combined_df = pd.concat([df1_selected, df2_selected, df3_selected], ignore_index=True)
+print(f"Combined dataset: {len(combined_df)} rows")
+
+# Normalize string columns
+for col in ['company', 'car_model']:
+    combined_df[col] = combined_df[col].astype(str).str.lower().str.strip()
+
+# Extract unique companies
+companies = combined_df['company'].unique().tolist()
+companies = [c for c in companies if c != 'unknown' and c != '' and c != 'nan']
+companies = sorted(companies)
+
+# Build models dictionary
+models_dict = {}
+for company in companies:
+    company_models = combined_df[combined_df['company'] == company]['car_model'].unique().tolist()
+    company_models = [m for m in company_models if m != 'unknown' and m != '' and m != 'nan']
+    models_dict[company] = sorted(company_models)
 
 # Save to JSON files
 companies_json_path = os.path.join(script_dir, "companies.json")

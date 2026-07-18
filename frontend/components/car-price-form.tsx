@@ -17,12 +17,23 @@ type FormData = {
   kmDriven: string
   transmission: string
   ownership: string
+  color: string
+  serviceHistory: boolean
+  previousAccidents: boolean
+  engineCapacity: string
+  carType: string
+  insurance: string
+  location: string
 }
 
 const years = Array.from({ length: 21 }, (_, i) => 2025 - i)
 const fuelTypes = ["Petrol", "Diesel", "CNG", "Hybrid", "Electric"]
 const transmissions = ["Manual", "Automatic", "AMT", "CVT", "DCT"]
 const ownerships = ["1st", "2nd", "3rd", "4th+"]
+const colors = ["White", "Black", "Silver", "Grey", "Blue", "Red", "Other"]
+const carTypes = ["Sedan", "SUV", "Hatchback", "Coupe", "Wagon", "MPV", "Other"]
+const insuranceTypes = ["Comprehensive", "Third-Party", "None"]
+const locations = ["Delhi", "Mumbai", "Bangalore", "Chennai", "Hyderabad", "Other"]
 
 const formatINR = (n: number | string) => (Number.isFinite(Number(n)) ? Number(n).toLocaleString("en-IN") : String(n))
 
@@ -37,6 +48,13 @@ export default function CarPriceForm() {
     kmDriven: "",
     transmission: transmissions[0],
     ownership: ownerships[0],
+    color: colors[0],
+    serviceHistory: false,
+    previousAccidents: false,
+    engineCapacity: "",
+    carType: carTypes[0],
+    insurance: insuranceTypes[0],
+    location: locations[0],
   })
   const [companies, setCompanies] = useState<string[]>([])
   const [models, setModels] = useState<string[]>([])
@@ -88,7 +106,7 @@ export default function CarPriceForm() {
   }, [formData.company])
 
   const setField = useCallback(
-    (name: keyof FormData, value: string | number) => {
+    (name: keyof FormData, value: string | number | boolean) => {
       startTransition(() => {
         setFormData((prev) => ({ ...prev, [name]: value as never }))
       })
@@ -96,7 +114,7 @@ export default function CarPriceForm() {
     [startTransition],
   )
 
-  const nextStep = () => setStep((s) => Math.min(8, s + 1))
+  const nextStep = () => setStep((s) => Math.min(15, s + 1))
   const prevStep = () => setStep((s) => Math.max(1, s - 1))
 
   const canSave = useMemo(() => !isLoading && prediction && !error, [isLoading, prediction, error])
@@ -124,7 +142,14 @@ export default function CarPriceForm() {
         fuel_type: formData.fuelType,
         kms_driven: Number(formData.kmDriven) || 0,
         transmission: formData.transmission,
-        owners: Number(formData.ownership.replace(/\D/g, "")) || 1, // Changed from ownership → owners
+        owners: Number(formData.ownership.replace(/\D/g, "")) || 1,
+        color: formData.color,
+        service_history: formData.serviceHistory,
+        previous_accidents: formData.previousAccidents,
+        engine_capacity: Number(formData.engineCapacity) || 0,
+        car_type: formData.carType,
+        insurance: formData.insurance,
+        location: formData.location,
       }),
     })
 
@@ -148,7 +173,7 @@ export default function CarPriceForm() {
       </CardHeader>
       <CardContent>
         {/* Fix overflow: wrap in overflow-x-auto and responsive sizing */}
-        <Stepper current={step} total={8} />
+        <Stepper current={step} total={15} />
 
         <AnimatePresence mode="wait" initial={false}>
           {step === 1 && (
@@ -276,6 +301,162 @@ export default function CarPriceForm() {
                   ))}
                 </select>
               </Field>
+              <Nav prev onPrev={prevStep} next onNext={nextStep} />
+            </Step>
+          )}
+
+          {step === 8 && (
+            <Step keyName="step-8">
+              <Field label="Color">
+                <select
+                  name="color"
+                  value={formData.color}
+                  onChange={(e) => setField("color", e.target.value)}
+                  className="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                >
+                  {colors.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              <Nav prev onPrev={prevStep} next onNext={nextStep} />
+            </Step>
+          )}
+
+          {step === 9 && (
+            <Step keyName="step-9">
+              <Field label="Service History">
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="serviceHistory"
+                      checked={formData.serviceHistory}
+                      onChange={() => setField("serviceHistory", true)}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <span>Yes</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="serviceHistory"
+                      checked={!formData.serviceHistory}
+                      onChange={() => setField("serviceHistory", false)}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <span>No</span>
+                  </label>
+                </div>
+              </Field>
+              <Nav prev onPrev={prevStep} next onNext={nextStep} />
+            </Step>
+          )}
+
+          {step === 10 && (
+            <Step keyName="step-10">
+              <Field label="Previous Accidents">
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="previousAccidents"
+                      checked={formData.previousAccidents}
+                      onChange={() => setField("previousAccidents", true)}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <span>Yes</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="previousAccidents"
+                      checked={!formData.previousAccidents}
+                      onChange={() => setField("previousAccidents", false)}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <span>No</span>
+                  </label>
+                </div>
+              </Field>
+              <Nav prev onPrev={prevStep} next onNext={nextStep} />
+            </Step>
+          )}
+
+          {step === 11 && (
+            <Step keyName="step-11">
+              <Field label="Engine Capacity (L)">
+                <Input
+                  type="number"
+                  step="0.1"
+                  placeholder="e.g. 1.5"
+                  value={formData.engineCapacity}
+                  onChange={(e) => setField("engineCapacity", e.target.value)}
+                  className="h-11"
+                />
+              </Field>
+              <Nav prev onPrev={prevStep} next onNext={nextStep} />
+            </Step>
+          )}
+
+          {step === 12 && (
+            <Step keyName="step-12">
+              <Field label="Car Type">
+                <select
+                  name="carType"
+                  value={formData.carType}
+                  onChange={(e) => setField("carType", e.target.value)}
+                  className="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                >
+                  {carTypes.map((ct) => (
+                    <option key={ct} value={ct}>
+                      {ct}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              <Nav prev onPrev={prevStep} next onNext={nextStep} />
+            </Step>
+          )}
+
+          {step === 13 && (
+            <Step keyName="step-13">
+              <Field label="Insurance Type">
+                <select
+                  name="insurance"
+                  value={formData.insurance}
+                  onChange={(e) => setField("insurance", e.target.value)}
+                  className="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                >
+                  {insuranceTypes.map((ins) => (
+                    <option key={ins} value={ins}>
+                      {ins}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              <Nav prev onPrev={prevStep} next onNext={nextStep} />
+            </Step>
+          )}
+
+          {step === 14 && (
+            <Step keyName="step-14">
+              <Field label="Location">
+                <select
+                  name="location"
+                  value={formData.location}
+                  onChange={(e) => setField("location", e.target.value)}
+                  className="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                >
+                  {locations.map((loc) => (
+                    <option key={loc} value={loc}>
+                      {loc}
+                    </option>
+                  ))}
+                </select>
+              </Field>
               <div className="flex items-center justify-between">
                 <Button variant="outline" onClick={prevStep}>
                   Back
@@ -286,7 +467,6 @@ export default function CarPriceForm() {
                     nextStep()
                   }}
                   className="bg-blue-600 hover:bg-blue-700"
-                  disabled={!formData.ownership}
                 >
                   Predict Price
                 </Button>
@@ -294,9 +474,9 @@ export default function CarPriceForm() {
             </Step>
           )}
 
-          {step === 8 && (
+          {step === 15 && (
             <motion.div
-              key="step-8"
+              key="step-15"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}

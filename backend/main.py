@@ -761,6 +761,13 @@ class CarRequest(BaseModel):
     fuel_type: str
     transmission: str
     owners: int = Field(..., ge=1, le=10)
+    color: str = "unknown"
+    service_history: bool = False
+    previous_accidents: bool = False
+    engine_capacity: float = 0.0
+    car_type: str = "unknown"
+    insurance: str = "unknown"
+    location: str = "unknown"
 
 # =========================
 # PREDICTION ENDPOINT
@@ -779,29 +786,36 @@ def predict_price(car: CarRequest):
         # Map request data to match training columns
         input_data = {
             "company": normalize_string(car.company),
-            "model": normalize_string(car.car_model),
+            "car_model": normalize_string(car.car_model),
             "year": car.year,
             "kms_driven": car.kms_driven,
             "fuel_type": normalize_string(car.fuel_type),
             "transmission": normalize_string(car.transmission),
-            "owners": car.owners
+            "owners": car.owners,
+            "color": normalize_string(car.color),
+            "service_history": car.service_history,
+            "previous_accidents": car.previous_accidents,
+            "engine_capacity": car.engine_capacity,
+            "car_type": normalize_string(car.car_type),
+            "insurance": normalize_string(car.insurance),
+            "location": normalize_string(car.location)
         }
 
         logger.info(f"Input data: {input_data}")
 
         input_df = pd.DataFrame([input_data])
-        
+
         # One-hot encode categorical features
         X = pd.get_dummies(input_df)
         logger.info(f"One-hot encoded features: {X.columns.tolist()}")
-        
+
         # Make sure all features expected by model are present
         X = X.reindex(columns=model.feature_names_in_, fill_value=0)
         logger.info(f"Reindexed features: {X.shape}")
-        
+
         predicted_price = model.predict(X)[0]
         logger.info(f"Predicted price: {predicted_price}")
-        
+
         return {"prediction": round(predicted_price, 2)}
     
     except Exception as e:
