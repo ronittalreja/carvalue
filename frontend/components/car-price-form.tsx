@@ -72,6 +72,11 @@ export default function CarPriceForm() {
     }
   }, [])
 
+  // Capitalize company and model names for display
+  const capitalize = (str: string) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase())
+  }
+
   // Load models when company changes
   useEffect(() => {
     if (!formData.company) return
@@ -113,6 +118,24 @@ export default function CarPriceForm() {
     const list = JSON.parse(localStorage.getItem("saved-predictions") || "[]")
     const item = { ...formData, prediction, savedAt: new Date().toISOString() }
     localStorage.setItem("saved-predictions", JSON.stringify([item, ...list]))
+  }
+
+  const startOver = () => {
+    setFormData({
+      company: "",
+      carModel: "",
+      year: years[0],
+      fuelType: fuelTypes[0],
+      kmDriven: "",
+      transmission: transmissions[0],
+      ownership: ownerships[0],
+      serviceHistory: false,
+      previousAccidents: false,
+      insurance: insuranceTypes[0],
+    })
+    setPrediction(null)
+    setError(null)
+    setStep(1)
   }
 
   const predictPrice = async () => {
@@ -158,7 +181,7 @@ export default function CarPriceForm() {
       </CardHeader>
       <CardContent>
         {/* Fix overflow: wrap in overflow-x-auto and responsive sizing */}
-        <Stepper current={step} total={11} />
+        <Stepper current={step} total={11} onStepClick={setStep} />
 
         <AnimatePresence mode="wait" initial={false}>
           {step === 1 && (
@@ -172,7 +195,7 @@ export default function CarPriceForm() {
                 >
                   {companies.map((c) => (
                     <option key={c} value={c}>
-                      {c}
+                      {capitalize(c)}
                     </option>
                   ))}
                 </select>
@@ -192,7 +215,7 @@ export default function CarPriceForm() {
                 >
                   {models.map((m) => (
                     <option key={m} value={m}>
-                      {m}
+                      {capitalize(m)}
                     </option>
                   ))}
                 </select>
@@ -414,7 +437,7 @@ export default function CarPriceForm() {
                   )}
                 </CardContent>
                 <CardFooter className="flex items-center justify-between">
-                  <Button variant="outline" onClick={() => setStep(1)}>
+                  <Button variant="outline" onClick={startOver}>
                     Start Over
                   </Button>
                   <Button onClick={saveToLocal} disabled={!canSave} className="bg-blue-600 hover:bg-blue-700">
@@ -521,7 +544,7 @@ const KiloInput = memo(function KiloInput({
   )
 })
 
-const Stepper = memo(function Stepper({ current, total }: { current: number; total: number }) {
+const Stepper = memo(function Stepper({ current, total, onStepClick }: { current: number; total: number; onStepClick?: (step: number) => void }) {
   return (
     <div className="mb-6 w-full">
       <div className="flex items-center w-full">
@@ -529,15 +552,16 @@ const Stepper = memo(function Stepper({ current, total }: { current: number; tot
           const isActive = i + 1 === current
           const isDone = i + 1 < current
           const circleClass = isActive
-            ? "bg-blue-600 text-white border-blue-600"
+            ? "bg-blue-600 text-white border-blue-600 cursor-pointer"
             : isDone
-              ? "bg-emerald-500 text-white border-emerald-500"
-              : "bg-gray-100 text-gray-600 border-gray-200"
+              ? "bg-emerald-500 text-white border-emerald-500 cursor-pointer"
+              : "bg-gray-100 text-gray-600 border-gray-200 cursor-pointer"
 
           return (
             <div key={i} className="flex items-center w-full">
               <div
                 className={`w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center text-[10px] md:text-xs border shrink-0 ${circleClass}`}
+                onClick={() => onStepClick && onStepClick(i + 1)}
               >
                 {isDone ? "✓" : i + 1}
               </div>
