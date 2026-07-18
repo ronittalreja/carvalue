@@ -18,6 +18,9 @@ type Selector = {
   km: string
   transmission: string
   ownership: string
+  serviceHistory: boolean
+  previousAccidents: boolean
+  insurance: string
 }
 
 type Step = "form" | "result"
@@ -26,6 +29,7 @@ const years = Array.from({ length: 21 }, (_, i) => 2025 - i)
 const fuels = ["Petrol", "Diesel", "CNG", "Electric", "Hybrid"]
 const transmissions = ["Manual", "Automatic", "AMT", "CVT", "DCT"]
 const ownerships = ["1st", "2nd", "3rd", "4th+"]
+const insuranceTypes = ["Comprehensive", "Third-Party", "None"]
 const formatINR = (n?: number | null) => (n == null ? "—" : n.toLocaleString("en-IN"))
 
 export default function ComparePage() {
@@ -42,6 +46,9 @@ export default function ComparePage() {
     km: "",
     transmission:"",
     ownership:"",
+    serviceHistory: false,
+    previousAccidents: false,
+    insurance: insuranceTypes[0],
   })
   const [b, setB] = useState<Selector>({
     company: "",
@@ -51,6 +58,9 @@ export default function ComparePage() {
     km: "",
     transmission: "",
     ownership:"",
+    serviceHistory: false,
+    previousAccidents: false,
+    insurance: insuranceTypes[0],
   })
 
   const [predA, setPredA] = useState<number | null>(null)
@@ -114,6 +124,9 @@ export default function ComparePage() {
             kms_driven: Number(a.km),
             transmission: a.transmission,
             owners: ownershipMap[a.ownership] || 1,
+            service_history: a.serviceHistory,
+            previous_accidents: a.previousAccidents,
+            insurance: a.insurance,
           }),
         }),
         fetch("https://carvalue.onrender.com/predict", {
@@ -127,6 +140,9 @@ export default function ComparePage() {
             kms_driven: Number(b.km),
             transmission: b.transmission,
             owners: ownershipMap[b.ownership] || 1,
+            service_history: b.serviceHistory,
+            previous_accidents: b.previousAccidents,
+            insurance: b.insurance,
           }),
         }),
       ])
@@ -152,6 +168,9 @@ export default function ComparePage() {
       km: "30000",
       transmission: transmissions[0],
       ownership: ownerships[0],
+      serviceHistory: false,
+      previousAccidents: false,
+      insurance: insuranceTypes[0],
     })
     setB({
       company: "",
@@ -161,6 +180,9 @@ export default function ComparePage() {
       km: "30000",
       transmission: transmissions[0],
       ownership: ownerships[0],
+      serviceHistory: false,
+      previousAccidents: false,
+      insurance: insuranceTypes[0],
     })
   }
 
@@ -239,6 +261,9 @@ export default function ComparePage() {
                   <div><strong>KMs:</strong> {Number(a.km).toLocaleString()}</div>
                   <div><strong>Transmission:</strong> {a.transmission}</div>
                   <div><strong>Ownership:</strong> {a.ownership}</div>
+                  <div><strong>Service History:</strong> {a.serviceHistory ? "Yes" : "No"}</div>
+                  <div><strong>Previous Accidents:</strong> {a.previousAccidents ? "Yes" : "No"}</div>
+                  <div><strong>Insurance:</strong> {a.insurance}</div>
                 </div>
               </CardContent>
             </Card>
@@ -256,6 +281,9 @@ export default function ComparePage() {
                   <div><strong>KMs:</strong> {Number(b.km).toLocaleString()}</div>
                   <div><strong>Transmission:</strong> {b.transmission}</div>
                   <div><strong>Ownership:</strong> {b.ownership}</div>
+                  <div><strong>Service History:</strong> {b.serviceHistory ? "Yes" : "No"}</div>
+                  <div><strong>Previous Accidents:</strong> {b.previousAccidents ? "Yes" : "No"}</div>
+                  <div><strong>Insurance:</strong> {b.insurance}</div>
                 </div>
               </CardContent>
             </Card>
@@ -419,6 +447,73 @@ function SelectorCard({
           value={selector.km}
           onChange={(e) => setSelector((p) => ({ ...p, km: e.target.value.replace(/[^\d]/g, "") }))}
         />
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Service history available?</label>
+          <div className="flex gap-4">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name={`serviceHistory-${title}`}
+                checked={selector.serviceHistory}
+                onChange={() => setSelector((p) => ({ ...p, serviceHistory: true }))}
+                className="w-4 h-4"
+              />
+              <span>Yes</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name={`serviceHistory-${title}`}
+                checked={!selector.serviceHistory}
+                onChange={() => setSelector((p) => ({ ...p, serviceHistory: false }))}
+                className="w-4 h-4"
+              />
+              <span>No</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Has the car been in an accident?</label>
+          <div className="flex gap-4">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name={`previousAccidents-${title}`}
+                checked={selector.previousAccidents}
+                onChange={() => setSelector((p) => ({ ...p, previousAccidents: true }))}
+                className="w-4 h-4"
+              />
+              <span>Yes</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name={`previousAccidents-${title}`}
+                checked={!selector.previousAccidents}
+                onChange={() => setSelector((p) => ({ ...p, previousAccidents: false }))}
+                className="w-4 h-4"
+              />
+              <span>No</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Car's insurance type</label>
+          <select
+            className="p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            value={selector.insurance}
+            onChange={(e) => setSelector((p) => ({ ...p, insurance: e.target.value }))}
+          >
+            {insuranceTypes.map((ins) => (
+              <option key={ins} value={ins}>
+                {ins}
+              </option>
+            ))}
+          </select>
+        </div>
       </CardContent>
     </Card>
   )

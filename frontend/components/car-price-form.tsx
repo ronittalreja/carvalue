@@ -315,7 +315,7 @@ export default function CarPriceForm() {
 
           {step === 8 && (
             <Step keyName="step-8">
-              <Field label="Service History">
+              <Field label="Service history available?">
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center space-x-2">
                     <input
@@ -345,7 +345,7 @@ export default function CarPriceForm() {
 
           {step === 9 && (
             <Step keyName="step-9">
-              <Field label="Previous Accidents">
+              <Field label="Has the car been in an accident?">
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center space-x-2">
                     <input
@@ -375,7 +375,7 @@ export default function CarPriceForm() {
 
           {step === 10 && (
             <Step keyName="step-10">
-              <Field label="Insurance Type">
+              <Field label="Car's insurance type">
                 <select
                   name="insurance"
                   value={formData.insurance}

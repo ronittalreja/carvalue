@@ -58,9 +58,9 @@ export default function SavedPage() {
                 <p>KM Driven: {it.kmDriven}</p>
                 <p>Transmission: {it.transmission}</p>
                 <p>Ownership: {it.ownership}</p>
-                <p>Service History: {it.serviceHistory ? "Yes" : "No"}</p>
-                <p>Previous Accidents: {it.previousAccidents ? "Yes" : "No"}</p>
-                <p>Insurance: {it.insurance}</p>
+                <p>Service history available?: {it.serviceHistory ? "Yes" : "No"}</p>
+                <p>Has the car been in an accident?: {it.previousAccidents ? "Yes" : "No"}</p>
+                <p>Car's insurance type: {it.insurance}</p>
               </div>
               <p className="text-blue-600 font-bold mt-3 text-lg">₹ {it.prediction}</p>
               <p className="text-xs text-gray-400 mt-1">Saved: {new Date(it.savedAt).toLocaleString()}</p>
