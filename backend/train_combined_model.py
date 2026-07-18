@@ -169,22 +169,14 @@ for col in ['service_history', 'previous_accidents']:
 print(f"Cleaned dataset: {len(combined_df)} rows")
 print(f"Columns: {combined_df.columns.tolist()}")
 
-# Prepare features for training
+# Prepare features for training - only 10 fields
 feature_columns = ['company', 'car_model', 'year', 'kms_driven', 'fuel_type', 'transmission', 'owners']
-if 'color' in combined_df.columns:
-    feature_columns.append('color')
 if 'service_history' in combined_df.columns:
     feature_columns.append('service_history')
 if 'previous_accidents' in combined_df.columns:
     feature_columns.append('previous_accidents')
-if 'engine_capacity' in combined_df.columns:
-    feature_columns.append('engine_capacity')
-if 'car_type' in combined_df.columns:
-    feature_columns.append('car_type')
 if 'insurance' in combined_df.columns:
     feature_columns.append('insurance')
-if 'location' in combined_df.columns:
-    feature_columns.append('location')
 
 print(f"Feature columns: {feature_columns}")
 
@@ -194,14 +186,8 @@ y = combined_df['price']
 
 # One-hot encode categorical features
 categorical_cols = ['company', 'car_model', 'fuel_type', 'transmission']
-if 'color' in X.columns:
-    categorical_cols.append('color')
-if 'car_type' in X.columns:
-    categorical_cols.append('car_type')
 if 'insurance' in X.columns:
     categorical_cols.append('insurance')
-if 'location' in X.columns:
-    categorical_cols.append('location')
 
 X = pd.get_dummies(X, columns=categorical_cols, drop_first=True)
 

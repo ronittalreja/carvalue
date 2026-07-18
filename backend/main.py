@@ -761,13 +761,9 @@ class CarRequest(BaseModel):
     fuel_type: str
     transmission: str
     owners: int = Field(..., ge=1, le=10)
-    color: str = "unknown"
     service_history: bool = False
     previous_accidents: bool = False
-    engine_capacity: float = 0.0
-    car_type: str = "unknown"
     insurance: str = "unknown"
-    location: str = "unknown"
 
 # =========================
 # PREDICTION ENDPOINT
@@ -792,13 +788,9 @@ def predict_price(car: CarRequest):
             "fuel_type": normalize_string(car.fuel_type),
             "transmission": normalize_string(car.transmission),
             "owners": car.owners,
-            "color": normalize_string(car.color),
             "service_history": car.service_history,
             "previous_accidents": car.previous_accidents,
-            "engine_capacity": car.engine_capacity,
-            "car_type": normalize_string(car.car_type),
-            "insurance": normalize_string(car.insurance),
-            "location": normalize_string(car.location)
+            "insurance": normalize_string(car.insurance)
         }
 
         logger.info(f"Input data: {input_data}")
