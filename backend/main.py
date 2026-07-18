@@ -374,6 +374,7 @@ from pydantic import BaseModel, Field
 import pandas as pd
 import pickle
 import os
+import json
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 import logging
