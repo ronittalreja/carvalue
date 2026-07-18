@@ -767,8 +767,13 @@ class CarRequest(BaseModel):
 # =========================
 @app.post("/predict")
 def predict_price(car: CarRequest):
+    logger.info(f"Prediction request received: {car}")
+    
     if model is None:
+        logger.error("Model not loaded")
         raise HTTPException(status_code=500, detail="Model not loaded")
+    
+    logger.info(f"Model loaded successfully. Feature names: {model.feature_names_in_}")
     
     try:
         # Map request data to match training columns
@@ -782,21 +787,28 @@ def predict_price(car: CarRequest):
             "owners": car.owners
         }
 
+        logger.info(f"Input data: {input_data}")
+
         input_df = pd.DataFrame([input_data])
         
         # One-hot encode categorical features
         X = pd.get_dummies(input_df)
+        logger.info(f"One-hot encoded features: {X.columns.tolist()}")
         
         # Make sure all features expected by model are present
         X = X.reindex(columns=model.feature_names_in_, fill_value=0)
+        logger.info(f"Reindexed features: {X.shape}")
         
         predicted_price = model.predict(X)[0]
+        logger.info(f"Predicted price: {predicted_price}")
         
         return {"prediction": round(predicted_price, 2)}
     
     except Exception as e:
         logger.error(f"Prediction error: {e}")
-        raise HTTPException(status_code=400, detail="Please check your input values and try again")
+        import traceback
+        logger.error(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
 # =========================
 # DATA ENDPOINTS
