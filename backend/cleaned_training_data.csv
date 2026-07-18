@@ -10325,7 +10325,6 @@ mahindra,thar,2021.0,76920.0,diesel,manual,,False,False,unknown,1150000.0
 mahindra,bolero neo,2022.0,92760.0,diesel,manual,,False,False,unknown,740000.0
 hyundai,verna,2014.0,110000.0,diesel,manual,,False,False,unknown,329000.0
 maruti,brezza,2022.0,65710.0,petrol,manual,,False,False,unknown,816000.0
-ssangyong,rexton,2013.0,94610.0,diesel,auto,,False,False,unknown,327000.0
 mg,hector plus,2022.0,60890.0,diesel,manual,,False,False,unknown,1816000.0
 hyundai,venue,2022.0,49900.0,petrol,manual,,False,False,unknown,883000.0
 maruti,ciaz,2016.0,170000.0,diesel,manual,,False,False,unknown,355000.0
@@ -11060,7 +11059,6 @@ mahindra,alturas g4,2019.0,71050.0,diesel,auto,,False,False,unknown,1752000.0
 mg,hector plus,2020.0,100000.0,diesel,manual,,False,False,unknown,1150000.0
 mg,hector plus,2024.0,33490.0,petrol,auto,,False,False,unknown,2163000.0
 toyota,fortuner,2017.0,290000.0,diesel,auto,,False,False,unknown,2050000.0
-mitsubishi,pajero sport,2015.0,120000.0,diesel,auto,,False,False,unknown,612000.0
 tata,harrier,2019.0,110000.0,diesel,manual,,False,False,unknown,875000.0
 kia,carnival,2020.0,150000.0,diesel,auto,,False,False,unknown,2150000.0
 tata,indigo cs,2009.0,84810.0,diesel,manual,,False,False,unknown,65000.0
@@ -11705,7 +11703,6 @@ tata,safari,2021.0,32619.0,diesel,manual,,False,False,unknown,1626000.0000000002
 mg,hector plus,2021.0,62410.0,petrol,auto,,False,False,unknown,1350000.0
 citroen,c3,2023.0,11040.0,petrol,manual,,False,False,unknown,675000.0
 tata,tiago ev,2023.0,30050.0,electric,auto,,False,False,unknown,670000.0
-ssangyong,rexton,2014.0,120000.0,diesel,manual,,False,False,unknown,433000.0
 maruti,brezza,2023.0,12160.0,petrol,manual,,False,False,unknown,1051000.0
 jeep,compass,2020.0,67000.0,diesel,manual,,False,False,unknown,1515000.0
 kia,seltos,2022.0,26270.0,petrol,auto,,False,False,unknown,1300000.0
@@ -12148,7 +12145,6 @@ renault,duster,2013.0,100000.0,diesel,manual,,False,False,unknown,252999.9999999
 kia,seltos,2021.0,65330.0,petrol,auto,,False,False,unknown,1200000.0
 tata,punch,2021.0,19390.0,petrol,auto,,False,False,unknown,774000.0
 nissan,terrano,2014.0,100000.0,diesel,manual,,False,False,unknown,175000.0
-ssangyong,rexton,2013.0,170000.0,diesel,auto,,False,False,unknown,300000.0
 skoda,slavia,2024.0,54270.0,petrol,manual,,False,False,unknown,1250000.0
 maruti,ciaz,2016.0,55960.0,petrol,manual,,False,False,unknown,420000.0
 hyundai,i20 active,2015.0,68120.0,petrol,manual,,False,False,unknown,380000.0
@@ -12322,7 +12318,6 @@ hyundai,verna,2019.0,45310.0,diesel,manual,,False,False,unknown,863000.000000000
 mahindra,scorpio,2021.0,45570.0,diesel,manual,,False,False,unknown,1200000.0
 mahindra,xuv500,2013.0,110000.0,diesel,manual,,False,False,unknown,375000.0
 mahindra,tuv300,2020.0,91400.0,diesel,manual,,False,False,unknown,600000.0
-ssangyong,rexton,2015.0,81940.0,diesel,auto,,False,False,unknown,524000.0
 ford,figo aspire,2016.0,110000.0,diesel,manual,,False,False,unknown,295000.0
 hyundai,grand i10 nios,2019.0,36350.0,petrol,manual,,False,False,unknown,520000.0
 renault,duster,2014.0,120000.0,diesel,manual,,False,False,unknown,295000.0
@@ -12436,12 +12431,10 @@ toyota,innova,2015.0,120000.0,diesel,manual,,False,False,unknown,700000.0
 tata,harrier,2019.0,130000.0,diesel,manual,,False,False,unknown,1202000.0
 mercedes,benz gla class,2023.0,12430.0,petrol,auto,,False,False,unknown,3750000.0
 mahindra,thar,2022.0,13740.0,diesel,auto,,False,False,unknown,1490000.0
-mitsubishi,pajero sport,2014.0,260000.0,diesel,manual,,False,False,unknown,900000.0
 toyota,fortuner,2017.0,110000.0,diesel,auto,,False,False,unknown,2211000.0
 mg,hector,2022.0,24970.0,diesel,manual,,False,False,unknown,1651000.0000000002
 mg,hector,2023.0,54560.0,petrol,auto,,False,False,unknown,1850000.0
 jeep,compass,2022.0,72850.0,diesel,manual,,False,False,unknown,2000000.0
-mitsubishi,pajero sport,2015.0,130000.0,diesel,manual,,False,False,unknown,1100000.0
 tata,nexon ev,2021.0,76070.0,electric,auto,,False,False,unknown,1000000.0
 jeep,compass,2020.0,90520.0,diesel,manual,,False,False,unknown,1403000.0
 mahindra,alturas g4,2018.0,180000.0,diesel,auto,,False,False,unknown,1835000.0000000002
@@ -12806,7 +12799,6 @@ hyundai,eon,2012.0,120000.0,petrol,manual,,False,False,unknown,98000.0
 nissan,micra,2011.0,83920.0,petrol,manual,,False,False,unknown,78000.0
 maruti,zen estilo,2013.0,150000.0,petrol,manual,,False,False,unknown,114999.99999999999
 hyundai,accent,2012.0,200000.0,petrol,manual,,False,False,unknown,130000.0
-ssangyong,rexton,2013.0,130000.0,diesel,auto,,False,False,unknown,169000.0
 renault,duster,2019.0,59430.0,diesel,manual,,False,False,unknown,640000.0
 mg,astor,2022.0,21580.0,petrol,manual,,False,False,unknown,750000.0
 hyundai,creta,2021.0,39370.0,petrol,manual,,False,False,unknown,880000.0000000001
@@ -13927,7 +13919,6 @@ ford,ecosport,2014.0,150000.0,diesel,manual,,False,False,unknown,280000.0
 hyundai,creta,2019.0,170000.0,diesel,manual,,False,False,unknown,709000.0
 hyundai,grand i10,2015.0,25960.0,petrol,manual,,False,False,unknown,340000.0
 maruti,swift,2014.0,76450.0,diesel,manual,,False,False,unknown,336000.0
-ssangyong,rexton,2013.0,87980.0,diesel,auto,,False,False,unknown,320000.0
 hyundai,grand i10,2016.0,38140.0,petrol,manual,,False,False,unknown,359000.0
 mahindra,thar,2024.0,4000.0,petrol,auto,,False,False,unknown,1250000.0
 ford,endeavour,2010.0,130000.0,diesel,manual,,False,False,unknown,355000.0
@@ -14105,7 +14096,6 @@ mahindra,scorpio,2010.0,200000.0,diesel,manual,,False,False,unknown,260000.0
 renault,kwid,2016.0,62490.0,petrol,manual,,False,False,unknown,279000.0
 volkswagen,polo,2014.0,53790.0,petrol,manual,,False,False,unknown,275000.0
 toyota,etios,2011.0,130000.0,petrol,manual,,False,False,unknown,284000.0
-ssangyong,rexton,2014.0,96030.0,diesel,auto,,False,False,unknown,437000.0
 maruti,ertiga,2015.0,130000.0,petrol,manual,,False,False,unknown,450000.0
 maruti,wagon r 1.0,2016.0,98600.0,petrol,manual,,False,False,unknown,337000.0
 maruti,wagon r 1.0,2011.0,180000.0,petrol,manual,,False,False,unknown,172000.0
@@ -15130,7 +15120,6 @@ kia,seltos,2023.0,37560.0,diesel,manual,,False,False,unknown,1449000.0
 maruti,eeco,2020.0,63910.0,petrol,manual,,False,False,unknown,394000.0
 mahindra,marazzo,2018.0,220000.0,diesel,manual,,False,False,unknown,600000.0
 tata,altroz,2023.0,26170.0,diesel,manual,,False,False,unknown,734000.0
-porsche,cayenne,2017.0,110000.0,diesel,auto,,False,False,unknown,3800000.0
 tata,tiago ev,2023.0,75200.0,electric,auto,,False,False,unknown,800000.0
 volkswagen,jetta,2013.0,150000.0,diesel,manual,,False,False,unknown,440000.00000000006
 ford,figo,2014.0,39420.0,petrol,manual,,False,False,unknown,273000.0
@@ -17367,7 +17356,6 @@ ford,ecosport,2015.0,90900.0,diesel,manual,,False,False,unknown,484000.0
 skoda,rapid,2013.0,120000.0,diesel,manual,,False,False,unknown,330000.0
 volkswagen,vento,2014.0,100000.0,diesel,manual,,False,False,unknown,495000.0
 hyundai,new elantra,2019.0,77260.0,petrol,auto,,False,False,unknown,950000.0
-mitsubishi,pajero sport,2015.0,140000.0,diesel,manual,,False,False,unknown,700000.0
 mg,hector,2023.0,25680.0,petrol,auto,,False,False,unknown,1855000.0
 kia,sonet,2021.0,50640.0,petrol,manual,,False,False,unknown,855000.0000000001
 hyundai,i20,2012.0,23760.0,diesel,manual,,False,False,unknown,247000.00000000003
@@ -18282,7 +18270,6 @@ toyota,lexus,2020.0,65610.0,hybrid,auto,,False,False,unknown,4090000.0
 audi,q7,2015.0,75200.0,diesel,auto,,False,False,unknown,1250000.0
 mercedes,benz s class,2016.0,80260.0,diesel,auto,,False,False,unknown,4500000.0
 bmw,x1,2021.0,20000.0,petrol,auto,,False,False,unknown,2800000.0
-porsche,cayenne,2016.0,58980.0,diesel,auto,,False,False,unknown,3800000.0
 mercedes,benz s class,2017.0,43280.0,diesel,auto,,False,False,unknown,4500000.0
 mini,clubman,2017.0,63090.0,petrol,auto,,False,False,unknown,2600000.0
 bmw,3 series,2019.0,45600.0,diesel,auto,,False,False,unknown,2600000.0

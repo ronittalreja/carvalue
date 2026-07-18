@@ -128,6 +128,12 @@ def normalize_company_name(company):
 
 combined_df['company'] = combined_df['company'].apply(normalize_company_name)
 
+# Remove brands with insufficient data (causing prediction issues)
+brands_to_remove = ['porsche', 'ssangyong', 'mitsubishi']
+before_removal = len(combined_df)
+combined_df = combined_df[~combined_df['company'].isin(brands_to_remove)]
+print(f"Removed {before_removal - len(combined_df)} rows from brands with insufficient data: {brands_to_remove}")
+
 # Clean numeric columns
 combined_df['year'] = pd.to_numeric(combined_df['year'], errors='coerce')
 combined_df['kms_driven'] = pd.to_numeric(combined_df['kms_driven'], errors='coerce')
