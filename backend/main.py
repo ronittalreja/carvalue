@@ -440,6 +440,7 @@ try:
     with open(COMPANIES_JSON_PATH, 'r') as f:
         companies_data = json.load(f)
     logger.info(f"✅ Loaded {len(companies_data)} companies from JSON")
+    logger.info(f"Companies: {companies_data}")
 except Exception as e:
     logger.warning(f"⚠️ Failed to load companies from JSON: {e}")
     companies_data = []
@@ -448,6 +449,7 @@ try:
     with open(MODELS_JSON_PATH, 'r') as f:
         company_models_data = json.load(f)
     logger.info(f"✅ Loaded company models from JSON")
+    logger.info(f"Number of companies with models: {len(company_models_data)}")
 except Exception as e:
     logger.warning(f"⚠️ Failed to load company models from JSON: {e}")
     company_models_data = {}
@@ -825,10 +827,12 @@ def get_companies():
 
     # Use JSON data first
     if companies_data:
+        logger.info(f"Returning {len(companies_data)} companies from JSON data")
         return {"companies": companies_data}
 
     # Try cache first
     if companies_cache:
+        logger.info(f"Returning {len(companies_cache)} companies from cache")
         return {"companies": companies_cache}
 
     # Try to load from cache file
@@ -836,6 +840,7 @@ def get_companies():
         cached_companies = cache_manager.load_companies()
         if cached_companies:
             companies_cache = cached_companies
+            logger.info(f"Returning {len(companies_cache)} companies from cache file")
             return {"companies": companies_cache}
 
     # Fallback to dataframe
@@ -848,8 +853,9 @@ def get_companies():
         return {"companies": []}
 
     companies = df['company'].unique().tolist()
-    companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c)]
+    companies = [c for c in companies if c != 'unknown' and c != '' and pd.notna(c) and not str(c).replace('.', '').isdigit()]
     companies_cache = sorted(companies)
+    logger.info(f"Returning {len(companies_cache)} companies from dataframe fallback")
     return {"companies": companies_cache}
 
 @app.get("/models/{company}")
