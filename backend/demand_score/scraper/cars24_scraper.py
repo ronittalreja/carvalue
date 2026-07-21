@@ -146,13 +146,10 @@ class Cars24Scraper:
 if __name__ == "__main__":
     scraper = Cars24Scraper()
     
-    # Test with Mumbai first to verify pagination works
-    print("Testing pagination with Mumbai...")
-    results = scraper.scrape_city("mumbai")
+    # Retry Bangalore to get remaining cars (got 930, need 1170 more)
+    print("Retrying Bangalore to get remaining cars...")
+    results = scraper.scrape_city("bangalore")
     
     if results:
-        # Save the data
-        scraper.save_raw_data("mumbai", results)
-        print(f"\nData saved successfully")
-    else:
-        print("\nNo data retrieved")
+        scraper.save_raw_data("bangalore", results)
+        print(f"\nBangalore data saved successfully")
