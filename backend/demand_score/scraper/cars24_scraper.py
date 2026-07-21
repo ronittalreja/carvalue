@@ -21,8 +21,15 @@ class Cars24Scraper:
         }
         self.cities = {
             "mumbai": "2378",
+            "delhi-ncr": "1",
             "bangalore": "4709",
-            "pune": "2423"
+            "hyderabad": "3686",
+            "chennai": "5732",
+            "pune": "2423",
+            "kolkata": "777",
+            "ahmedabad": "1692",
+            "chandigarh": "769",
+            "jaipur": "2130"
         }
         self.raw_data_dir = os.path.join(os.path.dirname(__file__), "../data/raw")
         
@@ -146,10 +153,25 @@ class Cars24Scraper:
 if __name__ == "__main__":
     scraper = Cars24Scraper()
     
-    # Retry Bangalore to get remaining cars (got 930, need 1170 more)
-    print("Retrying Bangalore to get remaining cars...")
-    results = scraper.scrape_city("bangalore")
+    # Scrape all cities
+    cities_to_scrape = ["delhi-ncr", "hyderabad", "chennai", "kolkata", "ahmedabad", "chandigarh", "jaipur"]
     
-    if results:
-        scraper.save_raw_data("bangalore", results)
-        print(f"\nBangalore data saved successfully")
+    for city in cities_to_scrape:
+        print(f"\n{'='*60}")
+        print(f"Scraping {city}...")
+        print(f"{'='*60}")
+        
+        results = scraper.scrape_city(city)
+        
+        if results:
+            scraper.save_raw_data(city, results)
+            print(f"\n{city} data saved successfully")
+        else:
+            print(f"\nFailed to scrape {city}")
+        
+        # Add delay between cities to avoid rate limiting
+        time.sleep(2)
+    
+    print(f"\n{'='*60}")
+    print("All cities scraping complete!")
+    print(f"{'='*60}")
