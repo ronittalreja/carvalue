@@ -22,9 +22,12 @@ export default function HomePage() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 pt-2">
+          <div className="grid grid-cols-2 gap-4 pt-2">
             <Button variant="outline" asChild>
               <Link href="/demand">Demand Index</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/demand-score">Demand Score</Link>
             </Button>
             <Button variant="outline" asChild>
               <Link href="/compare">Compare cars</Link>

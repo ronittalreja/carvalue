@@ -1166,7 +1166,105 @@ def health_check():
     }
 
 # =========================
-# DEBUG ENDPOINT
+# DEMAND SCORE API (Independent Feature)
+# =========================
+DEMAND_SCORE_JSON_PATH = os.path.join(os.path.dirname(__file__), "demand_score/data/generated/demand_score.json")
+demand_score_data = None
+
+try:
+    with open(DEMAND_SCORE_JSON_PATH, 'r') as f:
+        demand_score_data = json.load(f)
+    logger.info(f"✅ Loaded demand score data")
+except Exception as e:
+    logger.warning(f"⚠️ Failed to load demand score data: {e}")
+    demand_score_data = {}
+
+@app.get("/api/demand-score")
+def get_demand_score(
+    brand: str = Query(..., description="Car brand (e.g., Honda, Maruti)"),
+    model: str = Query(..., description="Car model (e.g., City, Swift)"),
+    variant: Optional[str] = Query(None, description="Car variant (optional)"),
+    city: Optional[str] = Query(None, description="City (optional)"),
+    year: Optional[int] = Query(None, description="Year (optional)"),
+    fuel: Optional[str] = Query(None, description="Fuel type (optional)"),
+    transmission: Optional[str] = Query(None, description="Transmission (optional)")
+):
+    """
+    Get demand score for a specific car based on live marketplace data.
+    This is an independent feature from the existing Demand Index.
+    """
+    if not demand_score_data:
+        raise HTTPException(status_code=503, detail="Demand score data not available")
+    
+    brand_norm = brand.lower().strip()
+    model_norm = model.lower().strip()
+    city_norm = city.lower().strip() if city else None
+    
+    # Try to find exact match first
+    key = f"{brand_norm}_{model_norm}_{city_norm}" if city_norm else f"{brand_norm}_{model_norm}_"
+    
+    # Search through available scores (new structure uses "Make Model" format)
+    matched_score = None
+    search_key = f"{brand_norm} {model_norm}"
+    
+    for score_key, score_data in demand_score_data.get("scores", {}).items():
+        # Case-insensitive matching
+        if score_key.lower() == search_key.lower():
+            matched_score = score_data
+            break
+    
+    if not matched_score:
+        # Try partial matching (brand only)
+        for score_key, score_data in demand_score_data.get("scores", {}).items():
+            if brand_norm in score_key.lower():
+                matched_score = score_data
+                break
+    
+    if not matched_score:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"No demand data found for {brand} {model}"
+        )
+    
+    # Extract data from new structure
+    analytics = matched_score.get("analytics", {})
+    components = matched_score.get("components", {})
+    
+    # Format average price
+    avg_price = matched_score.get("averagePrice", 0)
+    avg_price_str = f"₹{avg_price/100000:.2f}L" if avg_price > 0 else "N/A"
+    
+    # Determine market trend (placeholder since we don't have historical data yet)
+    market_trend = "Stable"  # Will be enhanced with historical data
+    price_trend_str = "0%"  # Will be enhanced with historical data
+    
+    return {
+        "score": matched_score.get("score", 0),
+        "level": matched_score.get("level", "Unknown"),
+        "listingCount": matched_score.get("listingCount", 0),
+        "averagePrice": avg_price_str,
+        "marketTrend": market_trend,
+        "priceTrend": price_trend_str,
+        "recommendation": matched_score.get("recommendation", "No recommendation available"),
+        "signals": {
+            "brandPopularity": components.get("brandPopularity", 0),
+            "modelPopularity": components.get("listingPopularity", 0),  # Using listing popularity as proxy
+            "cityPopularity": components.get("geographicPresence", 0),
+            "averageAge": analytics.get("averageAge", 0),
+            "averageKms": analytics.get("averageKm", 0)
+        },
+        "metadata": {
+            "brand": brand,
+            "model": model,
+            "variant": variant,
+            "city": city,
+            "year": year,
+            "fuel": fuel,
+            "transmission": transmission,
+            "dataFreshness": demand_score_data.get("metadata", {}).get("generated_at", "Unknown")
+        }
+    }
+
 # =========================
 @app.get("/debug")
 def debug_info():
