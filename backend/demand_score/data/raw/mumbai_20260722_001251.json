@@ -1,0 +1,724 @@
+[
+  {
+    "cmsData": {
+      "data": {
+        "seo": {},
+        "theme": "light",
+        "backgroundColor": "#00000000",
+        "data": [
+          {
+            "id": "8878",
+            "key": "HorizontalFilter",
+            "type": "HORIZONTAL_FILTER",
+            "data": {
+              "isSeo": false,
+              "tabs": [
+                {
+                  "id": "be211117-0f6c-4336-8d17-99c1dd4a2fb4",
+                  "key": "filter",
+                  "icon": "filter-filled",
+                  "text": "Filters",
+                  "color": "",
+                  "theme": "",
+                  "redirection": {},
+                  "selectedIcon": "filter-filled"
+                },
+                {
+                  "id": "6faa3e0f-9224-4117-87bd-a0810a17df43",
+                  "key": "sort",
+                  "icon": "bars-three-outline",
+                  "text": "Sort by",
+                  "color": "",
+                  "theme": "",
+                  "redirection": {},
+                  "selectedIcon": "bars-three-filled"
+                }
+              ],
+              "inlineWidgets": []
+            },
+            "label": "HorizontalFilter",
+            "title": "top filter trip",
+            "isActive": true,
+            "platform": [
+              "MSITE",
+              "APP"
+            ],
+            "widgetKey": "clp_top_filters",
+            "description": "",
+            "sectionType": "HorizontalFilter",
+            "pageSectionId": 8471,
+            "isOverridden": false,
+            "hideListingSchema": false,
+            "remove": false
+          },
+          {
+            "id": "8879",
+            "key": "PlaceholderWidget",
+            "type": "APPLIED_FILTER_BAR",
+            "data": {
+              "isSeo": false,
+              "cta": {},
+              "inlineWidgets": []
+            },
+            "label": "PlaceholderWidget",
+            "title": "top filter strip ",
+            "isActive": true,
+            "platform": [
+              "MSITE",
+              "APP"
+            ],
+            "widgetKey": "APPLIED_FILTER_BAR",
+            "description": "",
+            "sectionType": "PlaceholderWidget",
+            "pageSectionId": 8472,
+            "isOverridden": false,
+            "hideListingSchema": false,
+            "remove": false
+          },
+          {
+            "id": "11535",
+            "key": "StaticBanner",
+            "type": "STATIC_FULL_BLEED_BANNER",
+            "data": {
+              "configuration": {
+                "theme": "light",
+                "width": 360,
+                "height": 120,
+                "aspectRatioValue": "3/1",
+                "aspectRatio": 3.0,
+                "gap": 12
+              },
+              "isSeo": false,
+              "media": {
+                "id": "4b17c652-910a-495b-9672-0f444d014a7b",
+                "alt": "Frame 2147233963.png",
+                "url": "https://static-cdn.cars24.com/prod/cms/2026/01/23/2719b9d0-50b4-48d9-906f-62a40f00cea5Frame%202147233963.png",
+                "lazy": true,
+                "type": "image"
+              },
+              "inlineWidgets": [],
+              "redirection": {}
+            },
+            "label": "StaticBanner",
+            "title": "Vide Listing banner",
+            "isActive": true,
+            "platform": [
+              "MSITE",
+              "APP"
+            ],
+            "widgetKey": "video_listing_banner",
+            "description": "",
+            "sectionType": "StaticBanner",
+            "pageSectionId": 11123,
+            "isOverridden": false,
+            "hideListingSchema": false,
+            "remove": false
+          },
+          {
+            "id": "8887",
+            "key": "ListingCarCardRedirection",
+            "type": "LISTING_CAR_CARD_REDIRECTION",
+            "data": {
+              "configuration": {
+                "theme": "light"
+              },
+              "isSeo": false,
+              "inlineWidgets": [],
+              "carSegmentType": [
+                {
+                  "id": "7f43553b-d8ea-44aa-8b95-148747178e74",
+                  "key": "ZERO_WORRY",
+                  "text": "ZERO Worry",
+                  "label": "zero worry",
+                  "redirection": {
+                    "data": {
+                      "flow": "MEDIA_BOTTOM_SHEET_VIEW_V2",
+                      "props": {
+                        "media": {
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/07/13/a413acb4-e272-4f5a-ba25-07867d1db923ZeroworryCDP.png",
+                          "lazy": true
+                        },
+                        "width": 360,
+                        "height": 360,
+                        "mediaUrl": {
+                          "id": 6904,
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/07/13/a413acb4-e272-4f5a-ba25-07867d1db923ZeroworryCDP.png",
+                          "lazy": true,
+                          "name": "ZeroworryCDP.png",
+                          "slug": "3b4cc297-0e0b-406a-8afd-bf4cf51f52a7",
+                          "isSeo": false,
+                          "folder": {
+                            "id": 62,
+                            "name": "clp",
+                            "slug": null,
+                            "active": true,
+                            "language": {
+                              "id": 1,
+                              "code": "en",
+                              "name": "English",
+                              "isActive": false,
+                              "createdAt": "2025-01-23 18:50:10",
+                              "updatedAt": "2025-01-23 18:50:10"
+                            },
+                            "parentId": null,
+                            "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                            "createdAt": 1765353915000,
+                            "updatedAt": 1765353915000,
+                            "parentSlug": null
+                          },
+                          "caption": "",
+                          "language": {
+                            "id": 1,
+                            "code": "en",
+                            "name": "English",
+                            "isActive": false,
+                            "createdAt": "2025-01-23 18:50:10",
+                            "updatedAt": "2025-01-23 18:50:10"
+                          },
+                          "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                          "createdAt": 1783927715000,
+                          "extension": ".png",
+                          "mediaType": null,
+                          "streamUrl": null,
+                          "updatedAt": 1783927721000,
+                          "alternativeText": "ZeroworryCDP.png",
+                          "conversionStatus": "COMPLETED"
+                        },
+                        "aspectRatio": 1
+                      },
+                      "isSeo": false
+                    },
+                    "buTag": "bu_buy_used_car",
+                    "action": "CUSTOM_BOTTOM_SHEET"
+                  }
+                },
+                {
+                  "id": "d09b0cd6-01cb-46a4-a3b6-0563bea9ff18",
+                  "key": "ZERO_WORRY_PLUS",
+                  "text": "ZERO Worry Plus",
+                  "redirection": {
+                    "data": {
+                      "flow": "MEDIA_BOTTOM_SHEET_VIEW_V2",
+                      "props": {
+                        "media": {
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/01/27/2169d6f1-4229-4bb0-aa88-a5704c7bc4caimage%20%2828%29.png",
+                          "lazy": true
+                        },
+                        "width": 360,
+                        "height": 450,
+                        "mediaUrl": {
+                          "id": 5087,
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/01/27/2169d6f1-4229-4bb0-aa88-a5704c7bc4caimage%20%2828%29.png",
+                          "lazy": true,
+                          "name": "image (28).png",
+                          "slug": "ff876261-6ffa-4d07-8cff-0f3ff7484705",
+                          "folder": null,
+                          "caption": "",
+                          "language": {
+                            "id": 1,
+                            "code": "en",
+                            "name": "English",
+                            "isActive": false,
+                            "createdAt": "2025-01-23 18:50:10",
+                            "updatedAt": "2025-01-23 18:50:10"
+                          },
+                          "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                          "createdAt": 1769518065000,
+                          "extension": ".png",
+                          "mediaType": null,
+                          "streamUrl": null,
+                          "updatedAt": 1769518070000,
+                          "alternativeText": "image (28).png",
+                          "conversionStatus": "COMPLETED"
+                        },
+                        "aspectRatio": 0.8
+                      },
+                      "isSeo": false
+                    },
+                    "buTag": "bu_buy_used_car",
+                    "action": "CUSTOM_BOTTOM_SHEET"
+                  }
+                },
+                {
+                  "id": "39263167-d9b9-4293-938c-30de456e0c6e",
+                  "key": "ZERO_WORRY_MAX",
+                  "text": "Zero Worry Max",
+                  "redirection": {
+                    "data": {
+                      "flow": "MEDIA_BOTTOM_SHEET_VIEW_V2",
+                      "props": {
+                        "media": {
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/01/06/feab9e21-82ec-474b-962c-5db52c9e39a9type%3Dmax%20%284%29.png",
+                          "lazy": true
+                        },
+                        "width": 360,
+                        "height": 550,
+                        "mediaUrl": {
+                          "id": 4912,
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/01/06/feab9e21-82ec-474b-962c-5db52c9e39a9type%3Dmax%20%284%29.png",
+                          "lazy": true,
+                          "name": "type=max (4).png",
+                          "slug": "326fd15c-00a4-4bb8-80d3-b21ce950ee47",
+                          "folder": {
+                            "id": 62,
+                            "name": "clp",
+                            "slug": null,
+                            "active": true,
+                            "language": {
+                              "id": 1,
+                              "code": "en",
+                              "name": "English",
+                              "isActive": false,
+                              "createdAt": "2025-01-23 18:50:10",
+                              "updatedAt": "2025-01-23 18:50:10"
+                            },
+                            "parentId": null,
+                            "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                            "createdAt": 1765353915000,
+                            "updatedAt": 1765353915000,
+                            "parentSlug": null
+                          },
+                          "caption": "",
+                          "language": {
+                            "id": 1,
+                            "code": "en",
+                            "name": "English",
+                            "isActive": false,
+                            "createdAt": "2025-01-23 18:50:10",
+                            "updatedAt": "2025-01-23 18:50:10"
+                          },
+                          "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                          "createdAt": 1767685971000,
+                          "extension": ".png",
+                          "mediaType": null,
+                          "streamUrl": null,
+                          "updatedAt": 1767685976000,
+                          "alternativeText": "a",
+                          "conversionStatus": "COMPLETED"
+                        },
+                        "aspectRatio": 0.6545454545454545
+                      },
+                      "isSeo": false
+                    },
+                    "buTag": "bu_buy_used_car",
+                    "action": "CUSTOM_BOTTOM_SHEET"
+                  }
+                }
+              ],
+              "carCategoryType": [
+                {
+                  "id": "55231600-efd7-43f5-a21b-c938cf5fe7a5",
+                  "key": "GS",
+                  "text": "Cars24 Owned Stock",
+                  "label": "cars24OwnedStock",
+                  "redirection": {
+                    "data": {
+                      "flow": "MEDIA_BOTTOM_SHEET_VIEW_V2",
+                      "props": {
+                        "media": {
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/02/18/b74681e0-baca-4778-a003-fe84a4a915edProperty%201%3DOwned%20stock.png",
+                          "lazy": true
+                        },
+                        "width": 360,
+                        "height": 450,
+                        "mediaUrl": {
+                          "id": 5630,
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/02/18/b74681e0-baca-4778-a003-fe84a4a915edProperty%201%3DOwned%20stock.png",
+                          "lazy": true,
+                          "name": "Property 1=Owned stock.png",
+                          "slug": "cd932000-9d8d-42ba-a56e-db33f3b45a2f",
+                          "folder": {
+                            "id": 62,
+                            "name": "clp",
+                            "slug": null,
+                            "active": true,
+                            "language": {
+                              "id": 1,
+                              "code": "en",
+                              "name": "English",
+                              "isActive": false,
+                              "createdAt": "2025-01-23 18:50:10",
+                              "updatedAt": "2025-01-23 18:50:10"
+                            },
+                            "parentId": null,
+                            "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                            "createdAt": 1765353915000,
+                            "updatedAt": 1765353915000,
+                            "parentSlug": null
+                          },
+                          "caption": "",
+                          "language": {
+                            "id": 1,
+                            "code": "en",
+                            "name": "English",
+                            "isActive": false,
+                            "createdAt": "2025-01-23 18:50:10",
+                            "updatedAt": "2025-01-23 18:50:10"
+                          },
+                          "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                          "createdAt": 1771414523000,
+                          "extension": ".png",
+                          "mediaType": null,
+                          "streamUrl": null,
+                          "updatedAt": 1771414532000,
+                          "alternativeText": "d",
+                          "conversionStatus": "COMPLETED"
+                        },
+                        "aspectRatio": 0.8
+                      },
+                      "isSeo": false
+                    },
+                    "buTag": "bu_buy_used_car",
+                    "action": "CUSTOM_BOTTOM_SHEET"
+                  }
+                },
+                {
+                  "id": "0cbf4830-dba5-44ca-972b-99114c346dfd",
+                  "key": "C2C",
+                  "text": "Verified Direct Owner",
+                  "label": "VerifiedDirectOwner",
+                  "redirection": {
+                    "data": {
+                      "flow": "MEDIA_BOTTOM_SHEET_VIEW_V2",
+                      "props": {
+                        "media": {
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/02/18/511bb6c6-9bcf-42b7-84a7-f49047d7105fProperty%201%3DDirect%20owner.png",
+                          "lazy": true
+                        },
+                        "width": 360,
+                        "height": 360,
+                        "mediaUrl": {
+                          "id": 5629,
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/02/18/511bb6c6-9bcf-42b7-84a7-f49047d7105fProperty%201%3DDirect%20owner.png",
+                          "lazy": true,
+                          "name": "Property 1=Direct owner.png",
+                          "slug": "4bc09a36-8065-43cf-83ef-0f2bc94604f3",
+                          "folder": {
+                            "id": 62,
+                            "name": "clp",
+                            "slug": null,
+                            "active": true,
+                            "language": {
+                              "id": 1,
+                              "code": "en",
+                              "name": "English",
+                              "isActive": false,
+                              "createdAt": "2025-01-23 18:50:10",
+                              "updatedAt": "2025-01-23 18:50:10"
+                            },
+                            "parentId": null,
+                            "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                            "createdAt": 1765353915000,
+                            "updatedAt": 1765353915000,
+                            "parentSlug": null
+                          },
+                          "caption": "",
+                          "language": {
+                            "id": 1,
+                            "code": "en",
+                            "name": "English",
+                            "isActive": false,
+                            "createdAt": "2025-01-23 18:50:10",
+                            "updatedAt": "2025-01-23 18:50:10"
+                          },
+                          "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                          "createdAt": 1771414523000,
+                          "extension": ".png",
+                          "mediaType": null,
+                          "streamUrl": null,
+                          "updatedAt": 1771414529000,
+                          "alternativeText": "d",
+                          "conversionStatus": "COMPLETED"
+                        },
+                        "aspectRatio": 1
+                      },
+                      "isSeo": false
+                    },
+                    "buTag": "bu_buy_used_car",
+                    "action": "CUSTOM_BOTTOM_SHEET"
+                  }
+                },
+                {
+                  "id": "0123036c-d91e-47fc-9866-82bc33bfc9da",
+                  "key": "D2C",
+                  "text": "Verified Dealer Partner",
+                  "label": "Verifieddealerpartner",
+                  "redirection": {
+                    "data": {
+                      "flow": "MEDIA_BOTTOM_SHEET_VIEW_V2",
+                      "props": {
+                        "media": {
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/01/07/30bc66ae-be52-4eaf-b8e0-52e4c8c4983fPartnerdealer.png",
+                          "lazy": true
+                        },
+                        "width": 360,
+                        "height": 360,
+                        "mediaUrl": {
+                          "id": 4937,
+                          "url": "https://static-cdn.cars24.com/prod/cms/2026/01/07/30bc66ae-be52-4eaf-b8e0-52e4c8c4983fPartnerdealer.png",
+                          "lazy": true,
+                          "name": "Partnerdealer.png",
+                          "slug": "a28dcd8a-cd96-427f-973c-75bc5ba449dc",
+                          "folder": {
+                            "id": 62,
+                            "name": "clp",
+                            "slug": null,
+                            "active": true,
+                            "language": {
+                              "id": 1,
+                              "code": "en",
+                              "name": "English",
+                              "isActive": false,
+                              "createdAt": "2025-01-23 18:50:10",
+                              "updatedAt": "2025-01-23 18:50:10"
+                            },
+                            "parentId": null,
+                            "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                            "createdAt": 1765353915000,
+                            "updatedAt": 1765353915000,
+                            "parentSlug": null
+                          },
+                          "caption": "",
+                          "language": {
+                            "id": 1,
+                            "code": "en",
+                            "name": "English",
+                            "isActive": false,
+                            "createdAt": "2025-01-23 18:50:10",
+                            "updatedAt": "2025-01-23 18:50:10"
+                          },
+                          "tenantId": "8046371b-0233-4b4d-a660-ec87dcd0f46b",
+                          "createdAt": 1767778380000,
+                          "extension": ".png",
+                          "mediaType": null,
+                          "streamUrl": null,
+                          "updatedAt": 1767778469000,
+                          "alternativeText": "Partnerdealer",
+                          "conversionStatus": "COMPLETED"
+                        },
+                        "aspectRatio": 1
+                      },
+                      "isSeo": false
+                    },
+                    "buTag": "bu_buy_used_car",
+                    "action": "CUSTOM_BOTTOM_SHEET"
+                  }
+                }
+              ]
+            },
+            "label": "ListingCarCardRedirection",
+            "title": "",
+            "isActive": true,
+            "platform": [
+              "MSITE",
+              "APP"
+            ],
+            "widgetKey": "LISTING_CAR_CARD_REDIRECTION",
+            "description": "",
+            "sectionType": "ListingCarCardRedirection",
+            "pageSectionId": 8480,
+            "isOverridden": false,
+            "hideListingSchema": false,
+            "remove": false
+          },
+          {
+            "id": "17725",
+            "key": "SEOSectionLinkedList",
+            "type": "SEO_SECTION_LINK_LIST",
+            "data": {
+              "configuration": {
+                "pageLength": 10
+              },
+              "isSeo": false,
+              "inlineWidgets": [],
+              "items": [
+                {
+                  "id": "5eacc62f-ddf6-414b-88ae-b0d54fff8a1c"
+                }
+              ],
+              "widgetHeader": {
+                "title": ""
+              }
+            },
+            "label": "SEOSectionLinkedList",
+            "title": "",
+            "isActive": true,
+            "platform": [
+              "MSITE"
+            ],
+            "widgetKey": "seo_section_category_links",
+            "description": "",
+            "sectionType": "SEOSectionLinkedList",
+            "pageSectionId": 15510,
+            "isOverridden": false,
+            "hideListingSchema": false,
+            "remove": false
+          },
+          {
+            "id": "8891",
+            "key": "SeoFaq",
+            "type": "SEO_FAQ",
+            "data": {
+              "items": [
+                {
+                  "title": "Is fuel type an important factor when buying an old car in Mumbai?",
+                  "description": "Absolutely. Petrol is still the most common, but if you\u2019re a frequent long-distance commuter\u2014say from Thane to South Mumbai\u2014diesel may offer better mileage. CNG is an option too, though pump availability can be a challenge."
+                },
+                {
+                  "title": "What is the starting price for used cars at Cars24 in Mumbai?",
+                  "description": "The starting price for used cars in Mumbai on Cars24 is as low as \u20b90.33 lakh, making it easier to find a 2nd hand car in Mumbai that fits your budget and daily driving needs."
+                },
+                {
+                  "title": "Which used body types are available in Mumbai?",
+                  "description": "You can explore a wide range of body types for second hand cars in Mumbai including SUV, Hatchback, or Sedan variants, suitable for everything from local commutes to weekend drives along the Western Express Highway."
+                },
+                {
+                  "title": "What are the available body types for used cars in Mumbai?",
+                  "description": "Cars24 offers a complete range of body types, including hatchbacks, SUVs, sedans, and luxury SUVs, in Mumbai hubs to accommodate a variety of preferences and needs."
+                },
+                {
+                  "title": "Which are the most popular used car model variants in Mumbai?",
+                  "description": "Some of the most popular used cars in Mumbai include Vxi, Vxi cng, Lxi cng, Lxi, Vxi amt, known for their balance of mileage, comfort, and city-friendly features."
+                },
+                {
+                  "title": "What warranty do I get with a used car from Cars24?",
+                  "description": "Cars24-listed pre owned cars in Mumbai comes with an optional extended warranty up to 3 years alongside standard coverage."
+                },
+                {
+                  "title": "How does Mumbai\u2019s monsoon season impact used car choice?",
+                  "description": "In flood-prone areas like Kurla or Sion, higher ground clearance vehicles like compact SUVs are preferred. Buyers often check for past water damage before purchasing."
+                },
+                {
+                  "title": "Which are the best-selling second hand cars in Mumbai?",
+                  "description": "Some of the best-selling used cars in Mumbai include  <strong>Maruti Ertiga</strong>, <strong>Maruti Wagon R 1.0</strong>,  and <strong>Honda City</strong>\u2014models that suit both narrow lanes and long-distance commutes."
+                },
+                {
+                  "title": "Is financing available for Cars24 cars in Mumbai?",
+                  "description": "Yes, with flexible EMIs, loan tenures up to 6 years, and zero down payment for eligible buyers."
+                },
+                {
+                  "title": "Can I schedule a test drive at home in Mumbai?",
+                  "description": "You can book a test drive either at a nearby Cars24 hub or right at your doorstep within Mumbai. A nominal, refundable fee is applicable and the process is fully coordinated by our team."
+                },
+                {
+                  "title": "Does traffic density influence the choice of transmission in Mumbai?",
+                  "description": "Definitely. In high-density zones like Powai or Lower Parel, many drivers prefer automatics for ease of driving in bumper-to-bumper traffic."
+                },
+                {
+                  "title": "How do I choose a used car that fits weekend getaways from Mumbai?",
+                  "description": "If you're often heading to Lonavala, Alibaug or Mahabaleshwar, a sedan or compact SUV with good boot space and highway comfort makes for a more practical pick."
+                },
+                {
+                  "title": "Does Cars24 handle RC transfer in Mumbai?",
+                  "description": "Yes, Cars24 offers complete RC transfer assistance at Mumbai, so that you can enjoy a hassle-free buying experience."
+                },
+                {
+                  "title": "Is it safe to buy a used car in Mumbai, considering the city\u2019s heavy monsoon season?",
+                  "description": "Yes, but it\u2019s important to thoroughly inspect the car for rust, corrosion, and underbody damage due to Mumbai\u2019s humidity and monsoon conditions. Always get a trusted mechanic\u2019s evaluation before finalizing the deal."
+                },
+                {
+                  "title": "What documents should I check when buying a second hand car in Mumbai?",
+                  "description": "Essential documents include the Registration Certificate (RC), valid insurance papers, Pollution Under Control (PUC) certificate, RTO tax receipts, service history, and Form 35/NOC if the car was financed."
+                },
+                {
+                  "title": "How do I transfer ownership of a used car in Mumbai?",
+                  "description": "When you buy a Cars24-listed 2nd hand car in Mumbai, the entire RC transfer process is managed by Cars24. For individual sellers, paid RC transfer support is available or can be facilitated via Cars24\u2019s partner network."
+                },
+                {
+                  "title": "Are used car prices in Mumbai higher compared to other cities?",
+                  "description": "Generally, yes. Due to higher demand, congestion, and premium lifestyles, used cars in Mumbai often cost more than in smaller cities. However, you can still find good deals through reputable platforms like Cars24."
+                },
+                {
+                  "title": "Can I buy a used car registered outside Mumbai and drive it here?",
+                  "description": "Yes, but you\u2019ll need to pay road tax in Maharashtra if the car is registered in another state, and complete re-registration with a new MH number plate at the Mumbai RTO."
+                },
+                {
+                  "title": "Are family-friendly cars available within a mid-range budget in Mumbai at Cars24?",
+                  "description": "<p>Yes, family-friendly used cars in Mumbai are available across multiple budget ranges. If you are looking for affordable second hand cars, then&nbsp;<a href=\"https://www.cars24.com/buy-used-cars-under-5-lakhs-mumbai/\">pre owned cars under 5 lakhs</a> and&nbsp;<a href=\"https://www.cars24.com/buy-used-cars-under-10-lakhs-mumbai/\">pre owned cars under 10 lakhs</a> could be a great pick. If what you are looking for is a spacious second hand option, then exploring&nbsp;<a href=\"https://www.cars24.com/buy-used-cars-under-15-lakhs-mumbai/\">pre owned cars under 15 lakhs</a> and&nbsp;<a href=\"https://www.cars24.com/buy-used-cars-under-20-lakhs-mumbai/\">pre owned cars under 20 lakhs</a> can help you find the perfect match.</p>"
+                }
+              ]
+            },
+            "label": "SeoFaq",
+            "title": "",
+            "isActive": true,
+            "platform": [
+              "MSITE",
+              "WEB"
+            ],
+            "widgetKey": "faq_seo",
+            "description": "",
+            "sectionType": "SeoFaq",
+            "pageSectionId": 8484,
+            "isOverridden": false,
+            "hideListingSchema": false,
+            "remove": false
+          }
+        ],
+        "cmsSlug": "buyusedcar"
+      }
+    },
+    "meta": {
+      "seoOptimalUrl": {
+        "enabled": true,
+        "url": "buy-used-cars-mumbai/"
+      },
+      "appliedFilter": [],
+      "page": {
+        "currentPage": 0,
+        "carListOffset": 0,
+        "size": 0,
+        "totalElements": 2179,
+        "sort": "bestmatch",
+        "searchAfter": [
+          4000001.995200038,
+          "10366494121"
+        ]
+      },
+      "cities": {
+        "2378": {
+          "legacyId": 2378,
+          "code": "CC_2378",
+          "name": "Mumbai",
+          "active": true,
+          "stateCode": "MH",
+          "geoLocation": [
+            18.9218,
+            72.8347
+          ],
+          "pincode": "400001",
+          "alternateName": "Mumbai",
+          "c2cCount": 1704,
+          "gsCount": 475,
+          "luxeCount": 55,
+          "carCountMap": {
+            "GS": {
+              "LUXE": 2,
+              "STANDARD": 473
+            },
+            "C2C": {
+              "LUXE": 53,
+              "STANDARD": 1651
+            }
+          },
+          "cityCenterLocality": "Gateway",
+          "geoLocationValid": true,
+          "c2CServiceable": true,
+          "serviceableBusinessVerticals": [
+            "C2C",
+            "GS"
+          ],
+          "luxeAvailable": true,
+          "gsserviceable": true,
+          "serviceAble": true,
+          "d2CServiceable": false
+        }
+      },
+      "cityId": 2378,
+      "cityCode": "CC_2378",
+      "appliedCarSegment": null,
+      "hubs": null,
+      "searchFilter": []
+    },
+    "redirectUrl": null
+  }
+]

@@ -27,7 +27,7 @@ class Cars24Scraper:
         self.raw_data_dir = os.path.join(os.path.dirname(__file__), "../data/raw")
         
     def scrape_city(self, city_name):
-        """Scrape all listings for a specific city using searchAfter pagination"""
+        """Scrape all listings for a specific city using v1 API with multiple requests"""
         if city_name not in self.cities:
             raise ValueError(f"City {city_name} not supported. Available: {list(self.cities.keys())}")
         
@@ -35,94 +35,77 @@ class Cars24Scraper:
         url = f"{self.base_url}-{city_name}"
         
         all_responses = []
-        search_after = None
-        request_count = 0
-        max_requests = 100  # Safety limit
+        total_cars_extracted = 0
+        
+        # Since v1 API seems limited to 30 cars per request without proper pagination,
+        # we'll make multiple requests with slight variations to gather more data
+        max_requests = 70  # To get ~2000 cars (30 * 70 = 2100)
         
         print(f"Starting scrape for {city_name}...")
         
-        while request_count < max_requests:
+        for request_num in range(max_requests):
+            # Build payload for v1 API
             payload = {
                 "searchFilter": [],
                 "cityId": city_id,
                 "sort": "bestmatch",
-                "size": 100,  # Increased size to get more cars per request
+                "size": 30,  # Max seems to be 30
                 "filterVersion": 4
             }
             
-            if search_after:
-                payload["searchAfter"] = search_after
+            # Vary the sort parameter to get different results
+            sort_options = ["bestmatch", "price_asc", "price_desc", "newest_first", "kilometers_asc"]
+            payload["sort"] = sort_options[request_num % len(sort_options)]
             
-            # Debug: print payload before request
-            print(f"Request {request_count + 1}:")
-            print(json.dumps(payload, indent=2))
+            # Log request details
+            print(f"\n=== Request {request_num + 1} ===")
+            print(f"Sort: {payload['sort']}")
+            print(f"Size: {payload['size']}")
             
             try:
                 response = requests.post(url, headers=self.headers, json=payload, timeout=30)
                 
-                # Debug: print response status
-                print(f"Status: {response.status_code}")
-                print(f"Response (first 1000 chars): {response.text[:1000]}")
-                
                 if response.status_code != 200:
-                    print(f"Error response: {response.text[:500]}")
+                    print(f"Error: Status {response.status_code}")
+                    print(f"Response: {response.text[:500]}")
                     break
-                    
+                
                 data = response.json()
                 
                 # Save the complete API response
                 all_responses.append(data)
-                print(f"Retrieved API response")
                 
-                # Extract searchAfter for next page from the Cars24 response structure
+                # Extract car data from v1 API response
                 try:
-                    # New API structure: data is directly in "content" array at root level
                     if "content" in data:
                         content = data["content"]
-                        # Count cars in this response
                         car_count = len(content)
-                        print(f"Found {car_count} car listings in this response")
+                        total_cars_extracted += car_count
+                        
+                        print(f"Cars Extracted: {car_count} (Total: {total_cars_extracted})")
                         
                         if car_count == 0:
-                            print(f"No more listings found for {city_name}")
+                            print(f"No more listings found")
                             break
+                        
+                        # Rate limiting
+                        time.sleep(0.5)
                     else:
-                        # Try old structure for backward compatibility
-                        content = data["cmsData"]["data"]["data"][0]["data"]["content"]
-                        car_count = sum(1 for item in content if item.get("type") == "SINGLE_CAR_CARD")
-                        print(f"Found {car_count} car listings in this response (old structure)")
-                        
-                        if car_count == 0:
-                            print(f"No more listings found for {city_name}")
-                            break
-                    
-                    # Get searchAfter from the response (cursor-based pagination)
-                    search_after = data.get("searchAfter")
-                    if not search_after:
-                        # Try alternative locations for searchAfter
-                        try:
-                            search_after = data.get("cmsData", {}).get("data", {}).get("searchAfter")
-                        except:
-                            pass
-                    
-                    if not search_after:
-                        print(f"No searchAfter token found, ending pagination for {city_name}")
+                        print(f"No content found in response")
                         break
-                    else:
-                        print(f"Got searchAfter token: {search_after[:50]}...")
                         
                 except (KeyError, IndexError) as e:
-                    print(f"Error parsing response structure: {e}")
+                    print(f"Error parsing response: {e}")
                     break
-                
-                request_count += 1
-                time.sleep(0.5)  # Rate limiting
-                
+                    
             except requests.exceptions.RequestException as e:
                 print(f"Error scraping {city_name}: {e}")
                 break
         
-        print(f"Completed scrape for {city_name}: {len(all_responses)} responses retrieved")
+        print(f"\n=== Scrape Complete ===")
+        print(f"Total requests: {len(all_responses)}")
+        print(f"Total cars extracted: {total_cars_extracted}")
+        
         return all_responses
     
     def save_raw_data(self, city_name, responses):
@@ -163,13 +146,13 @@ class Cars24Scraper:
 if __name__ == "__main__":
     scraper = Cars24Scraper()
     
-    # Scrape all available cities to gather more data
-    print("Scraping all available cities...")
-    results = scraper.scrape_all_cities()
+    # Test with Mumbai first to verify pagination works
+    print("Testing pagination with Mumbai...")
+    results = scraper.scrape_city("mumbai")
     
-    print("\nScraping Summary:")
-    for city, data in results.items():
-        if "error" in data:
-            print(f"{city}: FAILED - {data['error']}")
-        else:
-            print(f"{city}: SUCCESS - {data['pages']} responses, saved to {data['filepath']}")
+    if results:
+        # Save the data
+        scraper.save_raw_data("mumbai", results)
+        print(f"\nData saved successfully")
+    else:
+        print("\nNo data retrieved")

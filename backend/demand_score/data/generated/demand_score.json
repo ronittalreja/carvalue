@@ -1,47 +1,47 @@
 {
   "metadata": {
-    "generated_at": "2026-07-21T23:53:22.004815",
+    "generated_at": "2026-07-22T00:18:41.811784",
     "total_models": 39,
     "data_source": "Cars24 API",
     "algorithm_version": "1.0",
-    "total_listings_analyzed": 200
+    "total_listings_analyzed": 2330
   },
   "scores": {
     "Renault Kwid": {
-      "score": 85,
+      "score": 81,
       "level": "Very High",
-      "listingCount": 17,
-      "averagePrice": 223038,
-      "marketShare": 8.5,
+      "listingCount": 230,
+      "averagePrice": 210422,
+      "marketShare": 9.87,
       "recommendation": "Strong demand with excellent resale prospects.",
       "components": {
-        "listingPopularity": 89.5,
+        "listingPopularity": 75.9,
         "brandPopularity": 100.0,
         "variantAvailability": 100.0,
         "geographicPresence": 100.0,
-        "priceStability": 97.8,
-        "averageAge": 24.0,
-        "ownershipQuality": 17.6
+        "priceStability": 97.9,
+        "averageAge": 23.0,
+        "ownershipQuality": 1.3
       },
       "analytics": {
-        "medianPrice": 203745,
-        "averageAge": 7.6,
-        "averageKm": 65725,
+        "medianPrice": 198745,
+        "averageAge": 7.7,
+        "averageKm": 65339,
         "citiesAvailable": 3,
         "variantCount": 6,
-        "ownershipQuality": 17.6
+        "ownershipQuality": 1.3
       }
     },
     "Datsun Go": {
-      "score": 29,
+      "score": 23,
       "level": "Low",
       "listingCount": 2,
       "averagePrice": 216530,
-      "marketShare": 1.0,
+      "marketShare": 0.09,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 10.5,
-        "brandPopularity": 22.2,
+        "listingPopularity": 0.7,
+        "brandPopularity": 2.5,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 97.8,
@@ -58,90 +58,90 @@
       }
     },
     "Maruti Swift": {
-      "score": 55,
+      "score": 49,
       "level": "Moderate",
-      "listingCount": 9,
-      "averagePrice": 355344,
-      "marketShare": 4.5,
+      "listingCount": 80,
+      "averagePrice": 294511,
+      "marketShare": 3.43,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 47.4,
-        "brandPopularity": 21.4,
+        "listingPopularity": 26.4,
+        "brandPopularity": 14.8,
         "variantAvailability": 66.7,
         "geographicPresence": 100.0,
-        "priceStability": 96.4,
-        "averageAge": 2.0,
-        "ownershipQuality": 77.8
+        "priceStability": 97.1,
+        "averageAge": 0,
+        "ownershipQuality": 97.5
       },
       "analytics": {
-        "medianPrice": 297609,
-        "averageAge": 9.8,
-        "averageKm": 63768,
+        "medianPrice": 286800,
+        "averageAge": 10.0,
+        "averageKm": 53351,
         "citiesAvailable": 3,
         "variantCount": 4,
-        "ownershipQuality": 77.8
+        "ownershipQuality": 97.5
       }
     },
     "Tata NEXON": {
-      "score": 79,
+      "score": 74,
       "level": "High",
-      "listingCount": 14,
-      "averagePrice": 625934,
-      "marketShare": 7.0,
+      "listingCount": 156,
+      "averagePrice": 616784,
+      "marketShare": 6.7,
       "recommendation": "Good demand. Should sell relatively quickly.",
       "components": {
-        "listingPopularity": 73.7,
-        "brandPopularity": 63.6,
+        "listingPopularity": 51.5,
+        "brandPopularity": 66.4,
         "variantAvailability": 83.3,
         "geographicPresence": 100.0,
-        "priceStability": 93.7,
-        "averageAge": 59.0,
+        "priceStability": 93.8,
+        "averageAge": 60.0,
         "ownershipQuality": 100.0
       },
       "analytics": {
         "medianPrice": 616780,
-        "averageAge": 4.1,
-        "averageKm": 36020,
+        "averageAge": 4.0,
+        "averageKm": 42208,
         "citiesAvailable": 3,
         "variantCount": 5,
         "ownershipQuality": 100.0
       }
     },
     "Maruti Baleno": {
-      "score": 41,
-      "level": "Moderate",
-      "listingCount": 6,
-      "averagePrice": 457614,
-      "marketShare": 3.0,
-      "recommendation": "Moderate demand. Pricing will be important.",
+      "score": 39,
+      "level": "Low",
+      "listingCount": 77,
+      "averagePrice": 426756,
+      "marketShare": 3.3,
+      "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 31.6,
+        "listingPopularity": 25.4,
         "brandPopularity": 14.3,
         "variantAvailability": 33.3,
         "geographicPresence": 66.7,
-        "priceStability": 95.4,
-        "averageAge": 43.0,
-        "ownershipQuality": 33.3
+        "priceStability": 95.7,
+        "averageAge": 49.0,
+        "ownershipQuality": 2.6
       },
       "analytics": {
-        "medianPrice": 429148,
-        "averageAge": 5.7,
-        "averageKm": 55698,
+        "medianPrice": 424148,
+        "averageAge": 5.1,
+        "averageKm": 55828,
         "citiesAvailable": 2,
         "variantCount": 2,
-        "ownershipQuality": 33.3
+        "ownershipQuality": 2.6
       }
     },
     "Hyundai Grand i10": {
-      "score": 26,
+      "score": 22,
       "level": "Low",
       "listingCount": 2,
       "averagePrice": 338807,
-      "marketShare": 1.0,
+      "marketShare": 0.09,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 10.5,
-        "brandPopularity": 5.7,
+        "listingPopularity": 0.7,
+        "brandPopularity": 0.4,
         "variantAvailability": 33.3,
         "geographicPresence": 33.3,
         "priceStability": 96.6,
@@ -158,40 +158,40 @@
       }
     },
     "Datsun Redi Go": {
-      "score": 58,
+      "score": 60,
       "level": "Moderate",
-      "listingCount": 7,
-      "averagePrice": 167261,
-      "marketShare": 3.5,
+      "listingCount": 78,
+      "averagePrice": 174493,
+      "marketShare": 3.35,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 36.8,
-        "brandPopularity": 77.8,
+        "listingPopularity": 25.7,
+        "brandPopularity": 97.5,
         "variantAvailability": 50.0,
         "geographicPresence": 66.7,
         "priceStability": 98.3,
-        "averageAge": 13.0,
-        "ownershipQuality": 85.7
+        "averageAge": 19.0,
+        "ownershipQuality": 98.7
       },
       "analytics": {
         "medianPrice": 175206,
-        "averageAge": 8.7,
-        "averageKm": 28356,
+        "averageAge": 8.1,
+        "averageKm": 21007,
         "citiesAvailable": 2,
         "variantCount": 3,
-        "ownershipQuality": 85.7
+        "ownershipQuality": 98.7
       }
     },
     "Honda Jazz": {
-      "score": 27,
+      "score": 24,
       "level": "Low",
       "listingCount": 1,
       "averagePrice": 396774,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 5.3,
-        "brandPopularity": 6.7,
+        "listingPopularity": 0.3,
+        "brandPopularity": 0.4,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 96.0,
@@ -208,15 +208,15 @@
       }
     },
     "Maruti Alto K10": {
-      "score": 21,
-      "level": "Low",
+      "score": 18,
+      "level": "Very Low",
       "listingCount": 2,
       "averagePrice": 222000,
-      "marketShare": 1.0,
-      "recommendation": "Lower demand. May take longer to sell.",
+      "marketShare": 0.09,
+      "recommendation": "Very low demand. Consider competitive pricing.",
       "components": {
-        "listingPopularity": 10.5,
-        "brandPopularity": 4.8,
+        "listingPopularity": 0.7,
+        "brandPopularity": 0.4,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 97.8,
@@ -233,14 +233,14 @@
       }
     },
     "Volkswagen Polo": {
-      "score": 42,
-      "level": "Moderate",
+      "score": 38,
+      "level": "Low",
       "listingCount": 3,
       "averagePrice": 339425,
-      "marketShare": 1.5,
-      "recommendation": "Moderate demand. Pricing will be important.",
+      "marketShare": 0.13,
+      "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 15.8,
+        "listingPopularity": 1.0,
         "brandPopularity": 37.5,
         "variantAvailability": 50.0,
         "geographicPresence": 66.7,
@@ -258,15 +258,15 @@
       }
     },
     "Tata Nano": {
-      "score": 25,
+      "score": 23,
       "level": "Low",
       "listingCount": 1,
       "averagePrice": 106120,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 5.3,
-        "brandPopularity": 4.5,
+        "listingPopularity": 0.3,
+        "brandPopularity": 0.4,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 98.9,
@@ -283,14 +283,14 @@
       }
     },
     "Mahindra XUV500": {
-      "score": 36,
+      "score": 32,
       "level": "Low",
       "listingCount": 3,
       "averagePrice": 610633,
-      "marketShare": 1.5,
+      "marketShare": 0.13,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 15.8,
+        "listingPopularity": 1.0,
         "brandPopularity": 30.0,
         "variantAvailability": 33.3,
         "geographicPresence": 66.7,
@@ -308,14 +308,14 @@
       }
     },
     "Mahindra Bolero": {
-      "score": 31,
+      "score": 30,
       "level": "Low",
       "listingCount": 1,
       "averagePrice": 673000,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 5.3,
+        "listingPopularity": 0.3,
         "brandPopularity": 10.0,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
@@ -333,39 +333,39 @@
       }
     },
     "Hyundai Creta": {
-      "score": 75,
+      "score": 77,
       "level": "High",
-      "listingCount": 19,
-      "averagePrice": 655472,
-      "marketShare": 9.5,
+      "listingCount": 303,
+      "averagePrice": 645874,
+      "marketShare": 13.0,
       "recommendation": "Good demand. Should sell relatively quickly.",
       "components": {
         "listingPopularity": 100.0,
-        "brandPopularity": 54.3,
+        "brandPopularity": 65.7,
         "variantAvailability": 83.3,
         "geographicPresence": 66.7,
-        "priceStability": 93.4,
+        "priceStability": 93.5,
         "averageAge": 23.0,
         "ownershipQuality": 100.0
       },
       "analytics": {
         "medianPrice": 647800,
         "averageAge": 7.7,
-        "averageKm": 60159,
+        "averageKm": 59467,
         "citiesAvailable": 2,
         "variantCount": 5,
         "ownershipQuality": 100.0
       }
     },
     "Chevrolet Beat": {
-      "score": 44,
+      "score": 42,
       "level": "Moderate",
       "listingCount": 1,
       "averagePrice": 219248,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 5.3,
+        "listingPopularity": 0.3,
         "brandPopularity": 100.0,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
@@ -383,64 +383,64 @@
       }
     },
     "Nissan MAGNITE": {
-      "score": 59,
+      "score": 58,
       "level": "Moderate",
-      "listingCount": 6,
-      "averagePrice": 490835,
-      "marketShare": 3.0,
+      "listingCount": 77,
+      "averagePrice": 478355,
+      "marketShare": 3.3,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 31.6,
-        "brandPopularity": 85.7,
+        "listingPopularity": 25.4,
+        "brandPopularity": 98.7,
         "variantAvailability": 50.0,
         "geographicPresence": 66.7,
-        "priceStability": 95.1,
-        "averageAge": 53.0,
-        "ownershipQuality": 33.3
+        "priceStability": 95.2,
+        "averageAge": 50.0,
+        "ownershipQuality": 2.6
       },
       "analytics": {
         "medianPrice": 477300,
-        "averageAge": 4.7,
-        "averageKm": 57360,
+        "averageAge": 5.0,
+        "averageKm": 51696,
         "citiesAvailable": 2,
         "variantCount": 3,
-        "ownershipQuality": 33.3
+        "ownershipQuality": 2.6
       }
     },
     "Ford Ecosport": {
-      "score": 64,
+      "score": 63,
       "level": "High",
-      "listingCount": 6,
-      "averagePrice": 369034,
-      "marketShare": 3.0,
+      "listingCount": 77,
+      "averagePrice": 361029,
+      "marketShare": 3.3,
       "recommendation": "Good demand. Should sell relatively quickly.",
       "components": {
-        "listingPopularity": 31.6,
+        "listingPopularity": 25.4,
         "brandPopularity": 100.0,
         "variantAvailability": 50.0,
         "geographicPresence": 100.0,
-        "priceStability": 96.3,
+        "priceStability": 96.4,
         "averageAge": 0,
-        "ownershipQuality": 83.3
+        "ownershipQuality": 98.7
       },
       "analytics": {
         "medianPrice": 360353,
-        "averageAge": 10.5,
-        "averageKm": 53277,
+        "averageAge": 11.0,
+        "averageKm": 49199,
         "citiesAvailable": 3,
         "variantCount": 3,
-        "ownershipQuality": 83.3
+        "ownershipQuality": 98.7
       }
     },
     "Mahindra Kuv100": {
-      "score": 26,
+      "score": 25,
       "level": "Low",
       "listingCount": 1,
       "averagePrice": 318200,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 5.3,
+        "listingPopularity": 0.3,
         "brandPopularity": 10.0,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
@@ -458,14 +458,14 @@
       }
     },
     "Jeep Compass": {
-      "score": 44,
+      "score": 43,
       "level": "Moderate",
       "listingCount": 1,
       "averagePrice": 778865,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 5.3,
+        "listingPopularity": 0.3,
         "brandPopularity": 100.0,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
@@ -483,14 +483,14 @@
       }
     },
     "KIA SONET": {
-      "score": 35,
+      "score": 34,
       "level": "Low",
       "listingCount": 1,
       "averagePrice": 751500,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 5.3,
+        "listingPopularity": 0.3,
         "brandPopularity": 25.0,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
@@ -508,115 +508,115 @@
       }
     },
     "MG HECTOR": {
-      "score": 61,
-      "level": "High",
-      "listingCount": 6,
-      "averagePrice": 966933,
-      "marketShare": 3.0,
-      "recommendation": "Good demand. Should sell relatively quickly.",
+      "score": 58,
+      "level": "Moderate",
+      "listingCount": 77,
+      "averagePrice": 947539,
+      "marketShare": 3.3,
+      "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 31.6,
+        "listingPopularity": 25.4,
         "brandPopularity": 100.0,
         "variantAvailability": 33.3,
         "geographicPresence": 100.0,
-        "priceStability": 90.3,
-        "averageAge": 32.0,
-        "ownershipQuality": 16.7
+        "priceStability": 90.5,
+        "averageAge": 30.0,
+        "ownershipQuality": 1.3
       },
       "analytics": {
-        "medianPrice": 955400,
-        "averageAge": 6.8,
-        "averageKm": 60625,
+        "medianPrice": 945900,
+        "averageAge": 7.0,
+        "averageKm": 49265,
         "citiesAvailable": 3,
         "variantCount": 2,
-        "ownershipQuality": 16.7
+        "ownershipQuality": 1.3
       }
     },
     "Maruti Wagon R 1.0": {
       "score": 50,
       "level": "Moderate",
-      "listingCount": 10,
-      "averagePrice": 204391,
-      "marketShare": 5.0,
+      "listingCount": 152,
+      "averagePrice": 193282,
+      "marketShare": 6.52,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 52.6,
-        "brandPopularity": 23.8,
+        "listingPopularity": 50.2,
+        "brandPopularity": 28.2,
         "variantAvailability": 50.0,
         "geographicPresence": 66.7,
-        "priceStability": 98.0,
+        "priceStability": 98.1,
         "averageAge": 0,
-        "ownershipQuality": 90.0
+        "ownershipQuality": 99.3
       },
       "analytics": {
         "medianPrice": 206957,
-        "averageAge": 12.4,
-        "averageKm": 46307,
+        "averageAge": 13.0,
+        "averageKm": 38327,
         "citiesAvailable": 2,
         "variantCount": 3,
-        "ownershipQuality": 90.0
+        "ownershipQuality": 99.3
       }
     },
     "Tata Tiago": {
-      "score": 47,
+      "score": 44,
       "level": "Moderate",
-      "listingCount": 7,
-      "averagePrice": 319294,
-      "marketShare": 3.5,
+      "listingCount": 78,
+      "averagePrice": 293539,
+      "marketShare": 3.35,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 36.8,
-        "brandPopularity": 31.8,
+        "listingPopularity": 25.7,
+        "brandPopularity": 33.2,
         "variantAvailability": 33.3,
         "geographicPresence": 66.7,
-        "priceStability": 96.8,
-        "averageAge": 20,
+        "priceStability": 97.1,
+        "averageAge": 11.0,
         "ownershipQuality": 100.0
       },
       "analytics": {
-        "medianPrice": 296900,
-        "averageAge": 8,
-        "averageKm": 57380,
+        "medianPrice": 291000,
+        "averageAge": 8.9,
+        "averageKm": 60499,
         "citiesAvailable": 2,
         "variantCount": 2,
         "ownershipQuality": 100.0
       }
     },
     "Hyundai i10": {
-      "score": 52,
+      "score": 49,
       "level": "Moderate",
-      "listingCount": 11,
-      "averagePrice": 134773,
-      "marketShare": 5.5,
+      "listingCount": 153,
+      "averagePrice": 119020,
+      "marketShare": 6.57,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 57.9,
-        "brandPopularity": 31.4,
+        "listingPopularity": 50.5,
+        "brandPopularity": 33.2,
         "variantAvailability": 66.7,
         "geographicPresence": 66.7,
-        "priceStability": 98.7,
+        "priceStability": 98.8,
         "averageAge": 0,
-        "ownershipQuality": 18.2
+        "ownershipQuality": 1.3
       },
       "analytics": {
         "medianPrice": 121700,
         "averageAge": 12.5,
-        "averageKm": 60571,
+        "averageKm": 57123,
         "citiesAvailable": 2,
         "variantCount": 4,
-        "ownershipQuality": 18.2
+        "ownershipQuality": 1.3
       }
     },
     "Maruti Celerio": {
-      "score": 40,
-      "level": "Low",
-      "listingCount": 8,
+      "score": 44,
+      "level": "Moderate",
+      "listingCount": 150,
       "averagePrice": 294538,
-      "marketShare": 4.0,
-      "recommendation": "Lower demand. May take longer to sell.",
+      "marketShare": 6.44,
+      "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 42.1,
-        "brandPopularity": 19.1,
+        "listingPopularity": 49.5,
+        "brandPopularity": 27.8,
         "variantAvailability": 33.3,
         "geographicPresence": 33.3,
         "priceStability": 97.1,
@@ -633,14 +633,14 @@
       }
     },
     "Volkswagen Vento": {
-      "score": 35,
+      "score": 30,
       "level": "Low",
       "listingCount": 4,
       "averagePrice": 272882,
-      "marketShare": 2.0,
+      "marketShare": 0.17,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 21.1,
+        "listingPopularity": 1.3,
         "brandPopularity": 50.0,
         "variantAvailability": 33.3,
         "geographicPresence": 33.3,
@@ -658,14 +658,14 @@
       }
     },
     "KIA SELTOS": {
-      "score": 51,
+      "score": 47,
       "level": "Moderate",
       "listingCount": 3,
       "averagePrice": 801720,
-      "marketShare": 1.5,
+      "marketShare": 0.13,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 15.8,
+        "listingPopularity": 1.0,
         "brandPopularity": 75.0,
         "variantAvailability": 33.3,
         "geographicPresence": 66.7,
@@ -683,14 +683,14 @@
       }
     },
     "Mahindra XUV700": {
-      "score": 52,
+      "score": 46,
       "level": "Moderate",
       "listingCount": 5,
       "averagePrice": 1402538,
-      "marketShare": 2.5,
+      "marketShare": 0.21,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 26.3,
+        "listingPopularity": 1.7,
         "brandPopularity": 50.0,
         "variantAvailability": 50.0,
         "geographicPresence": 66.7,
@@ -708,65 +708,65 @@
       }
     },
     "Toyota Innova Crysta": {
-      "score": 53,
+      "score": 52,
       "level": "Moderate",
-      "listingCount": 6,
-      "averagePrice": 1622545,
-      "marketShare": 3.0,
+      "listingCount": 77,
+      "averagePrice": 1522290,
+      "marketShare": 3.3,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 31.6,
+        "listingPopularity": 25.4,
         "brandPopularity": 100.0,
         "variantAvailability": 33.3,
         "geographicPresence": 33.3,
-        "priceStability": 83.8,
+        "priceStability": 84.8,
         "averageAge": 20,
         "ownershipQuality": 100.0
       },
       "analytics": {
         "medianPrice": 1513818,
         "averageAge": 8,
-        "averageKm": 35138,
+        "averageKm": 37730,
         "citiesAvailable": 1,
         "variantCount": 2,
         "ownershipQuality": 100.0
       }
     },
     "Honda City": {
-      "score": 67,
+      "score": 69,
       "level": "High",
-      "listingCount": 14,
-      "averagePrice": 340409,
-      "marketShare": 7.0,
+      "listingCount": 227,
+      "averagePrice": 334864,
+      "marketShare": 9.74,
       "recommendation": "Good demand. Should sell relatively quickly.",
       "components": {
-        "listingPopularity": 73.7,
-        "brandPopularity": 93.3,
+        "listingPopularity": 74.9,
+        "brandPopularity": 99.6,
         "variantAvailability": 50.0,
         "geographicPresence": 66.7,
-        "priceStability": 96.6,
+        "priceStability": 96.7,
         "averageAge": 0,
-        "ownershipQuality": 64.3
+        "ownershipQuality": 66.5
       },
       "analytics": {
         "medianPrice": 340600,
-        "averageAge": 11.6,
-        "averageKm": 56383,
+        "averageAge": 11.7,
+        "averageKm": 53610,
         "citiesAvailable": 2,
         "variantCount": 3,
-        "ownershipQuality": 64.3
+        "ownershipQuality": 66.5
       }
     },
     "Maruti Dzire": {
-      "score": 35,
+      "score": 37,
       "level": "Low",
-      "listingCount": 4,
+      "listingCount": 75,
       "averagePrice": 501005,
-      "marketShare": 2.0,
+      "marketShare": 3.22,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 21.1,
-        "brandPopularity": 9.5,
+        "listingPopularity": 24.8,
+        "brandPopularity": 13.9,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 95.0,
@@ -785,37 +785,37 @@
     "Skoda KUSHAQ": {
       "score": 67,
       "level": "High",
-      "listingCount": 9,
-      "averagePrice": 786978,
-      "marketShare": 4.5,
+      "listingCount": 151,
+      "averagePrice": 790760,
+      "marketShare": 6.48,
       "recommendation": "Good demand. Should sell relatively quickly.",
       "components": {
-        "listingPopularity": 47.4,
+        "listingPopularity": 49.8,
         "brandPopularity": 100.0,
         "variantAvailability": 33.3,
         "geographicPresence": 66.7,
         "priceStability": 92.1,
-        "averageAge": 57.0,
+        "averageAge": 55.0,
         "ownershipQuality": 100.0
       },
       "analytics": {
         "medianPrice": 754800,
-        "averageAge": 4.3,
-        "averageKm": 46985,
+        "averageAge": 4.5,
+        "averageKm": 45536,
         "citiesAvailable": 2,
         "variantCount": 2,
         "ownershipQuality": 100.0
       }
     },
     "Audi Q5": {
-      "score": 45,
+      "score": 49,
       "level": "Moderate",
-      "listingCount": 2,
+      "listingCount": 73,
       "averagePrice": 2800000,
-      "marketShare": 1.0,
+      "marketShare": 3.13,
       "recommendation": "Moderate demand. Pricing will be important.",
       "components": {
-        "listingPopularity": 10.5,
+        "listingPopularity": 24.1,
         "brandPopularity": 100.0,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
@@ -833,15 +833,15 @@
       }
     },
     "Hyundai Elite i20": {
-      "score": 25,
+      "score": 21,
       "level": "Low",
       "listingCount": 2,
       "averagePrice": 338079,
-      "marketShare": 1.0,
+      "marketShare": 0.09,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 10.5,
-        "brandPopularity": 5.7,
+        "listingPopularity": 0.7,
+        "brandPopularity": 0.4,
         "variantAvailability": 33.3,
         "geographicPresence": 33.3,
         "priceStability": 96.6,
@@ -858,15 +858,15 @@
       }
     },
     "Maruti Ertiga": {
-      "score": 26,
+      "score": 22,
       "level": "Low",
       "listingCount": 2,
       "averagePrice": 353629,
-      "marketShare": 1.0,
+      "marketShare": 0.09,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 10.5,
-        "brandPopularity": 4.8,
+        "listingPopularity": 0.7,
+        "brandPopularity": 0.4,
         "variantAvailability": 33.3,
         "geographicPresence": 33.3,
         "priceStability": 96.5,
@@ -883,15 +883,15 @@
       }
     },
     "Maruti Alto 800": {
-      "score": 19,
+      "score": 17,
       "level": "Very Low",
       "listingCount": 1,
       "averagePrice": 170000,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Very low demand. Consider competitive pricing.",
       "components": {
-        "listingPopularity": 5.3,
-        "brandPopularity": 2.4,
+        "listingPopularity": 0.3,
+        "brandPopularity": 0.2,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 98.3,
@@ -908,14 +908,14 @@
       }
     },
     "Volkswagen Ameo": {
-      "score": 27,
+      "score": 26,
       "level": "Low",
       "listingCount": 1,
       "averagePrice": 355206,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 5.3,
+        "listingPopularity": 0.3,
         "brandPopularity": 12.5,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
@@ -933,15 +933,15 @@
       }
     },
     "Hyundai Verna": {
-      "score": 19,
+      "score": 17,
       "level": "Very Low",
       "listingCount": 1,
       "averagePrice": 297500,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Very low demand. Consider competitive pricing.",
       "components": {
-        "listingPopularity": 5.3,
-        "brandPopularity": 2.9,
+        "listingPopularity": 0.3,
+        "brandPopularity": 0.2,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 97.0,
@@ -958,15 +958,15 @@
       }
     },
     "Nissan Micra": {
-      "score": 27,
+      "score": 23,
       "level": "Low",
       "listingCount": 1,
       "averagePrice": 120600,
-      "marketShare": 0.5,
+      "marketShare": 0.04,
       "recommendation": "Lower demand. May take longer to sell.",
       "components": {
-        "listingPopularity": 5.3,
-        "brandPopularity": 14.3,
+        "listingPopularity": 0.3,
+        "brandPopularity": 1.3,
         "variantAvailability": 16.7,
         "geographicPresence": 33.3,
         "priceStability": 98.8,
