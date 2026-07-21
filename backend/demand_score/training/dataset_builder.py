@@ -15,39 +15,67 @@ class DatasetBuilder:
         return raw_files
     
     def extract_cars_from_response(self, api_response):
-        """Extract car objects from a single Cars24 API response using read_json.py logic"""
+        """Extract car objects from a single Cars24 API response"""
         cars = []
         
         try:
-            # Navigate to the content array (same structure as read_json.py)
-            content = api_response["cmsData"]["data"]["data"][0]["data"]["content"]
-            
-            for item in content:
-                if item.get("type") == "SINGLE_CAR_CARD":
-                    car_card = item["data"]["carCard"]
-                    
-                    # Extract car data using the exact field mapping from read_json.py
+            # Try new API structure first (content at root level)
+            if "content" in api_response:
+                content = api_response["content"]
+                
+                for car in content:
+                    # New API structure has car data directly in content array
                     car_data = {
-                        "appointmentId": car_card.get("appointmentId"),
-                        "make": car_card.get("make"),
-                        "model": car_card.get("model"),
-                        "variant": car_card.get("variant"),
-                        "year": car_card.get("year"),
-                        "price": car_card.get("listingPrice"),
-                        "fuelType": car_card.get("fuelType"),
-                        "transmission": car_card.get("transmission"),
-                        "ownership": car_card.get("ownership"),
-                        "odometer": car_card.get("odometer", {}).get("value") if car_card.get("odometer") else None,
-                        "cityId": car_card.get("cityId"),
-                        "sellerType": car_card.get("sellerType"),
-                        "status": car_card.get("status"),
-                        "image": car_card.get("listingImage", {}).get("uri") if car_card.get("listingImage") else None,
-                        "url": "https://www.cars24.com/" + car_card.get("cdpRelativeUrl", "") if car_card.get("cdpRelativeUrl") else None
+                        "appointmentId": car.get("appointmentId"),
+                        "make": car.get("make"),
+                        "model": car.get("model"),
+                        "variant": car.get("variant"),
+                        "year": car.get("year"),
+                        "price": car.get("listingPrice"),
+                        "fuelType": car.get("fuelType"),
+                        "transmission": car.get("transmissionType", {}).get("value") if car.get("transmissionType") else None,
+                        "ownership": car.get("ownership"),
+                        "odometer": car.get("odometer", {}).get("value") if car.get("odometer") else None,
+                        "cityId": car.get("cityId"),
+                        "sellerType": car.get("sellerType"),
+                        "status": car.get("status"),
+                        "image": car.get("listingImage", {}).get("uri") if car.get("listingImage") else None,
+                        "url": f"https://www.cars24.com/buy-used-car-{car.get('make', '').lower()}-{car.get('model', '').lower()}-{car.get('appointmentId', '')}"
                     }
                     
                     # Only include if essential fields are present
                     if car_data["appointmentId"] and car_data["make"] and car_data["model"]:
                         cars.append(car_data)
+            else:
+                # Try old API structure (backward compatibility)
+                content = api_response["cmsData"]["data"]["data"][0]["data"]["content"]
+                
+                for item in content:
+                    if item.get("type") == "SINGLE_CAR_CARD":
+                        car_card = item["data"]["carCard"]
+                        
+                        # Extract car data using the exact field mapping from read_json.py
+                        car_data = {
+                            "appointmentId": car_card.get("appointmentId"),
+                            "make": car_card.get("make"),
+                            "model": car_card.get("model"),
+                            "variant": car_card.get("variant"),
+                            "year": car_card.get("year"),
+                            "price": car_card.get("listingPrice"),
+                            "fuelType": car_card.get("fuelType"),
+                            "transmission": car_card.get("transmission"),
+                            "ownership": car_card.get("ownership"),
+                            "odometer": car_card.get("odometer", {}).get("value") if car_card.get("odometer") else None,
+                            "cityId": car_card.get("cityId"),
+                            "sellerType": car_card.get("sellerType"),
+                            "status": car_card.get("status"),
+                            "image": car_card.get("listingImage", {}).get("uri") if car_card.get("listingImage") else None,
+                            "url": "https://www.cars24.com/" + car_card.get("cdpRelativeUrl", "") if car_card.get("cdpRelativeUrl") else None
+                        }
+                        
+                        # Only include if essential fields are present
+                        if car_data["appointmentId"] and car_data["make"] and car_data["model"]:
+                            cars.append(car_data)
                         
         except (KeyError, IndexError) as e:
             print(f"Error extracting cars from response: {e}")

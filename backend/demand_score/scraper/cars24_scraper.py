@@ -6,24 +6,23 @@ import time
 
 class Cars24Scraper:
     def __init__(self):
-        self.base_url = "https://car-catalog-gateway-in.c24.tech/listing/v2/buy-used-cars"
+        self.base_url = "https://car-catalog-gateway-in.c24.tech/listing/v1/buy-used-cars"
         self.headers = {
-            "Content-Type": "application/json",
-            "x_tenant_id": "c24",
-            "x_user_city_id": "1",
-            "clientid": "c24-web",
-            "source": "web",
-            "x_experiment_id": "default"
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "origin": "https://www.cars24.com",
+            "referer": "https://www.cars24.com/",
+            "user-agent": "Mozilla/5.0",
+            "clientid": "389321643.1765379264",
+            "source": "WebApp",
+            "x_experiment_id": "18637211-c578-44cd-895b-f8774eaa1dcf",
+            "x_tenant_id": "INDIA_CAR_LISTING",
+            "x_user_city_id": "2378"
         }
         self.cities = {
-            "mumbai": "1",
-            "delhi": "2", 
-            "bangalore": "3",
-            "pune": "4",
-            "hyderabad": "5",
-            "chennai": "6",
-            "kolkata": "7",
-            "ahmedabad": "8"
+            "mumbai": "2378",
+            "bangalore": "4709",
+            "pune": "2423"
         }
         self.raw_data_dir = os.path.join(os.path.dirname(__file__), "../data/raw")
         
@@ -37,28 +36,33 @@ class Cars24Scraper:
         
         all_responses = []
         search_after = None
-        page = 0
-        max_pages = 100  # Safety limit
+        request_count = 0
+        max_requests = 100  # Safety limit
         
         print(f"Starting scrape for {city_name}...")
         
-        while page < max_pages:
+        while request_count < max_requests:
             payload = {
-                "cityId": int(city_id),
-                "filterVersion": "v2",
-                "page": page,
-                "searchFilter": {},
-                "userAction": "search"
+                "searchFilter": [],
+                "cityId": city_id,
+                "sort": "bestmatch",
+                "size": 100,  # Increased size to get more cars per request
+                "filterVersion": 4
             }
             
             if search_after:
                 payload["searchAfter"] = search_after
             
+            # Debug: print payload before request
+            print(f"Request {request_count + 1}:")
+            print(json.dumps(payload, indent=2))
+            
             try:
                 response = requests.post(url, headers=self.headers, json=payload, timeout=30)
                 
-                # Debug: print response status and first part of response
-                print(f"Page {page}: Status {response.status_code}")
+                # Debug: print response status
+                print(f"Status: {response.status_code}")
+                print(f"Response (first 1000 chars): {response.text[:1000]}")
                 
                 if response.status_code != 200:
                     print(f"Error response: {response.text[:500]}")
@@ -68,23 +72,31 @@ class Cars24Scraper:
                 
                 # Save the complete API response
                 all_responses.append(data)
-                print(f"Page {page}: Retrieved API response")
+                print(f"Retrieved API response")
                 
                 # Extract searchAfter for next page from the Cars24 response structure
                 try:
-                    # Navigate to the content array to find car listings
-                    content = data["cmsData"]["data"]["data"][0]["data"]["content"]
+                    # New API structure: data is directly in "content" array at root level
+                    if "content" in data:
+                        content = data["content"]
+                        # Count cars in this response
+                        car_count = len(content)
+                        print(f"Found {car_count} car listings in this response")
+                        
+                        if car_count == 0:
+                            print(f"No more listings found for {city_name}")
+                            break
+                    else:
+                        # Try old structure for backward compatibility
+                        content = data["cmsData"]["data"]["data"][0]["data"]["content"]
+                        car_count = sum(1 for item in content if item.get("type") == "SINGLE_CAR_CARD")
+                        print(f"Found {car_count} car listings in this response (old structure)")
+                        
+                        if car_count == 0:
+                            print(f"No more listings found for {city_name}")
+                            break
                     
-                    # Count cars in this response
-                    car_count = sum(1 for item in content if item.get("type") == "SINGLE_CAR_CARD")
-                    print(f"  Found {car_count} car listings on this page")
-                    
-                    if car_count == 0:
-                        print(f"No more listings found for {city_name} at page {page}")
-                        break
-                    
-                    # Get searchAfter from the response (Cars24 specific location)
-                    # This might be in different locations depending on API version
+                    # Get searchAfter from the response (cursor-based pagination)
                     search_after = data.get("searchAfter")
                     if not search_after:
                         # Try alternative locations for searchAfter
@@ -96,19 +108,21 @@ class Cars24Scraper:
                     if not search_after:
                         print(f"No searchAfter token found, ending pagination for {city_name}")
                         break
+                    else:
+                        print(f"Got searchAfter token: {search_after[:50]}...")
                         
                 except (KeyError, IndexError) as e:
                     print(f"Error parsing response structure: {e}")
                     break
                 
-                page += 1
+                request_count += 1
                 time.sleep(0.5)  # Rate limiting
                 
             except requests.exceptions.RequestException as e:
-                print(f"Error scraping {city_name} page {page}: {e}")
+                print(f"Error scraping {city_name}: {e}")
                 break
         
-        print(f"Completed scrape for {city_name}: {len(all_responses)} pages retrieved")
+        print(f"Completed scrape for {city_name}: {len(all_responses)} responses retrieved")
         return all_responses
     
     def save_raw_data(self, city_name, responses):
@@ -149,27 +163,13 @@ class Cars24Scraper:
 if __name__ == "__main__":
     scraper = Cars24Scraper()
     
-    # For now, use existing data instead of live API scraping
-    # The live API seems to require additional authentication or different payload structure
-    print("Using existing cars24_page2.json for testing...")
+    # Scrape all available cities to gather more data
+    print("Scraping all available cities...")
+    results = scraper.scrape_all_cities()
     
-    # Copy existing data to raw directory
-    import shutil
-    source_file = "cars24_page2.json"
-    target_dir = scraper.raw_data_dir
-    
-    if os.path.exists(source_file):
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        target_file = os.path.join(target_dir, f"existing_data_{timestamp}.json")
-        shutil.copy(source_file, target_file)
-        print(f"Copied existing data to {target_file}")
-    else:
-        print(f"Error: {source_file} not found")
-        print("Attempting live API scrape...")
-        
-        # Test with one city first
-        results = scraper.scrape_city("mumbai")
-        print(f"Total pages scraped: {len(results)}")
-        
-        # Save the data
-        scraper.save_raw_data("mumbai", results)
+    print("\nScraping Summary:")
+    for city, data in results.items():
+        if "error" in data:
+            print(f"{city}: FAILED - {data['error']}")
+        else:
+            print(f"{city}: SUCCESS - {data['pages']} responses, saved to {data['filepath']}")
