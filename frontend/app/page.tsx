@@ -26,9 +26,9 @@ export default function HomePage() {
             <Button variant="outline" asChild>
               <Link href="/demand">Demand Index</Link>
             </Button>
-            <Button variant="outline" asChild>
+            {/* <Button variant="outline" asChild>
               <Link href="/demand-score">Demand Score</Link>
-            </Button>
+            </Button> */}
             <Button variant="outline" asChild>
               <Link href="/compare">Compare cars</Link>
             </Button>
